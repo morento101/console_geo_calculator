@@ -13,7 +13,7 @@ def round_2(ans):
 
 
 def result(res):
-    print(f'Результат: {round_2(res)}мм')
+    print(f'Результат: {round_2(res)}')
 
 
 def permissible_residual_technical_leveling(length):
@@ -37,3 +37,8 @@ def intermediate_point_height(h, a, c):
     dev_horizon = h + a
     inter_point_h = dev_horizon - c
     result(inter_point_h)
+
+
+def project_height2(h1, i, d):
+    h2 = (i * d) + h1
+    result(h2)
