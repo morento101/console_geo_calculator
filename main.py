@@ -10,25 +10,25 @@ if __name__ == '__main__':
                          '--->')
 
         if category == '1':
-            task = input('Обчислити:\n' +
+            task = input('\nОбчислити:\n' +
                          '1. Допустима нев\'язка для нівелювання IV класу\n' 
                          '2. Допустима нев\'язка для технічного нівелювання\n'
                          '-->')
 
             if task == '1':
                 try:
-                    length = input('Введіть відстань L в км -->')
-                    length = fn.coma_replace(length)
-                    fn.permissible_residual_leveling_4class(length)
+                    length = input('\nВведіть відстань L в км:')
+                    perm_res = fn.permissible_residual_leveling_4class(length)
+                    print(f'Результат: {perm_res} мм')
 
                 except ValueError:
                     print('ВВЕДИ ЧИСЛО!!!')
 
             elif task == '2':
                 try:
-                    length = input('Введіть відстань L в км -->')
-                    length = fn.coma_replace(length)
-                    fn.permissible_residual_technical_leveling(length)
+                    length = input('\nВведіть відстань L в км:')
+                    perm_res = fn.permissible_residual_technical_leveling(length)
+                    print(f'Результат: {perm_res} мм')
 
                 except ValueError:
                     print('ВВЕДИ ЧИСЛО!!!')
@@ -37,28 +37,28 @@ if __name__ == '__main__':
                 print('ВВЕДИ ЧИСЛО!!!')
 
         elif category == '2':
-            task = input('Обчислити:\n' +
-                         '1. Висоти проміжної точки, маючи a, c, h\n'
-                         '2. Горизонт приладу, маючи h задньої рейки та її відліки\n'
+            task = input('\nОбчислити:\n'
+                         '1. Горизонт приладу, маючи h задньої рейки та її відліки\n'
+                         '2. Висоти проміжної точки, маючи h, a, c\n'
                          '-->')
 
             if task == '1':
                 try:
-                    h = input('Введіть h задньої точки -->')
-                    a = input('Введіть a задньої точки -->')
-                    c = input('Введіть c задньої точки -->')
-                    h, a, c = fn.coma_replace(h), fn.coma_replace(a), fn.coma_replace(c)
-                    fn.intermediate_point_height(h, a, c)
+                    h = input('\nВведіть h задньої точки:')
+                    a = input('Введіть a задньої точки:')
+                    dev_horizon = fn.device_horizon(h, a)
+                    print(f'Результат: {dev_horizon} м')
 
                 except ValueError:
                     print('ВВЕДИ ЧИСЛО!!!')
 
             elif task == '2':
                 try:
-                    h = input('Введіть h задньої точки -->')
-                    a = input('Введіть a задньої точки -->')
-                    h, a = fn.coma_replace(h), fn.coma_replace(a)
-                    fn.device_horizon(h, a)
+                    h = input('\nВведіть h задньої точки:')
+                    a = input('Введіть відлік чорної шкали a задньої точки:')
+                    c = input('Введіть відлік чорної шкали c проміжної точки:')
+                    inter_point_h = fn.intermediate_point_height(h, a, c)
+                    print(f'Результат: {inter_point_h} м')
 
                 except ValueError:
                     print('ВВЕДИ ЧИСЛО!!!')
@@ -67,7 +67,7 @@ if __name__ == '__main__':
                 print('ВВЕДИ ЧИСЛО!!!')
 
         elif category == '3':
-            task = input('Обчислити:\n' +
+            task = input('\nОбчислити:\n' +
                          '1. Проектну висоту H2, маючи ухил i, висоту H1 і відстань d\n'
                          '2. Ухил i, маючи висоти H1, H2 і відстань d\n'
                          '3. Тангенс колової кривої Т, маючи радіус R і бісектрису Б\n'
@@ -88,14 +88,30 @@ if __name__ == '__main__':
 
             if task == '1':
                 try:
-                    h1 = input('Введіть висоту 1-ої точки h1 -->')
-                    i = input('Введіть ухил i -->')
-                    d = input('Введіть відстань d -->')
-                    h1, i, d = fn.coma_replace(h1), fn.coma_replace(i), fn.coma_replace(d)
-                    fn.project_height2(h1, i, d)
+                    h1 = input('\nВведіть висоту 1-ої точки h1:')
+                    i = input('Введіть ухил i:')
+                    d = input('Введіть відстань d:')
+                    h2 = fn.project_height2(h1, i, d)
+                    print(f'Результат: {h2} м')
 
                 except ValueError:
                     print('ВВЕДИ ЧИСЛО!!!')
+
+            elif task == '2':
+                h1 = input('\nВведіть висоту першої точи:')
+                h2 = input('Введіть висоту другої точки:')
+                d = input('Введіть відстань d:')
+                slope = fn.calc_slope(h1, h2, d)
+                print(f'Результат {slope} проміле')
+
+            elif task == '3':
+                r = input('\nВведіть радіус R:')
+                b = input('Введіть бісектрисц Б:')
+                tangens = fn.calc_tan_having_radius_bisector(r, b)
+                print(f'Результат {tangens} м')
+
+            else:
+                print('ВВЕДИ ЧИСЛО!!!')
 
         else:
             print('ВВЕДИ ЧИСЛО!!!')
