@@ -1,6 +1,9 @@
 import math
 
 
+ONE_RAD = 0.01745329252
+
+
 def coma_replace(s):
     s = str(s)
     if ',' in s:
@@ -8,14 +11,30 @@ def coma_replace(s):
     return float(s)
 
 
-def readout_convert_to_metres(a):
-    if len(a) == 4:
-        a = a[0] + '.' + a[1:]
-    return float(a)
+def readout_convert_to_metres(readout):
+    if len(readout) == 4:
+        readout = readout[0] + '.' + readout[1:]
+    return float(readout)
 
 
 def calc_asec(angle):
     return math.acos(1/angle)
+
+
+def convert_grad_min_secs_to_decimal(string):
+    string = string.split(' ')
+    if len(string) == 3:
+        degrees, minutes, seconds = string[0], string[1], string[2]
+        decimal_degrees = float(degrees) + float(minutes) / 60 + float(seconds) / 3600
+        return decimal_degrees
+
+    elif len(string) == 2:
+        degrees, minutes = string[0], string[1]
+        decimal_degrees = float(degrees) + float(minutes) / 60
+        return decimal_degrees
+
+    else:
+        print('НЕПРАВИЛЬНИЙ ФОРМАТ!!!')
 
 
 def permissible_residual_leveling_4class(length):
@@ -63,4 +82,16 @@ def calc_tan_having_radius_bisector(r, b):
     r, b = coma_replace(r), coma_replace(b)
     angle = 2 * calc_asec((b / r) + 1)
     tangent = r * math.tan(angle / 2)
+    return round(tangent, 2)
+
+
+def calc_tan_having_curve_measure(c, m):
+    c, m = coma_replace(c), coma_replace(m)
+    tangent = (m + c) / 2
+    return round(tangent, 2)
+
+
+def calc_tan_having_angle_radius(angle, radius):
+    angle, radius = convert_grad_min_secs_to_decimal(angle), coma_replace(radius)
+    tangent = radius * math.tan((angle * ONE_RAD) / 2)
     return round(tangent, 2)
