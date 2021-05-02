@@ -112,6 +112,19 @@ def calc_bisector_having_radius_angle(radius, angle):
     return round(bisector, 2)
 
 
+def angle_having_radius_tangent(radius, tangent):
+    radius, tangent = coma_replace(radius), coma_replace(tangent)
+    angle = 2 * math.atan(tangent / radius)
+    return angle
+
+
+def convert_decimal_degrees_to_degrees(angle):
+    degrees = int(angle)
+    minutes = int((angle - degrees) * 60)
+    seconds = round((angle - degrees - (minutes / 60)) * 3600)
+    return f'{degrees}°{minutes}\'{seconds}\'\''
+
+
 def calc_bisector_having_tangent_radius(tangent, radius):
     tangent, radius = coma_replace(tangent), coma_replace(radius)
     angle = 2 * math.atan(tangent / radius)
@@ -129,3 +142,15 @@ def distance_from_0work_by_y(h1, h2, d):
     h1, h2, d = coma_replace(h1), coma_replace(h2), coma_replace(d)
     x = (h2 * d) / (h1 + h2)
     return round(x, 2)
+
+
+def curve_having_radius_angle(radius, angle):
+    radius, angle = coma_replace(radius), convert_grad_min_secs_to_decimal(angle)
+    curve = radius * ((math.pi * angle) / (180 * ONE_RAD))
+    return round(curve, 2)
+
+
+def curve_having_tangent_measure(tangent, measure):
+    tangent, measure = coma_replace(tangent), coma_replace(measure)
+    curve = 2 * tangent - measure
+    return round(curve, 2)

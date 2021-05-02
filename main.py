@@ -78,12 +78,9 @@ if __name__ == '__main__':
                          '8. Відстань від пікету до точки нульових робіт по x\n'
                          '9. Відстань від пікету до точки нулбових робіт по y\n'
                          '10. Криву К, маючи радіус R і кут повороту\n'
-                         '11. Криву К при тангенсі Т, домірі Д, бісектрисі Б\n'
+                         '11. Криву К при тангенсі Т, домірі Д\n'
                          '12. Кут повороту, маючи радіус R і тангенс\n'
-                         '13. Криву К, маючи тангенс Т і бісектрису Б\n'
-                         '14. Криву К при радіусі R і куті повороту\n'
-                         '15. Домір Д при радіус R і кут повороту\n'
-                         '16. Криву К, маючи тангенс Т і домір Д\n'
+                         '13. Домір Д при радіус R і кут повороту\n'
                          '-->')
 
             if task == '1':
@@ -178,6 +175,38 @@ if __name__ == '__main__':
                     d = input('Введіть відстань d:')
                     y = fn.distance_from_0work_by_y(h1, h2, d)
                     print(f'Результат {y} м')
+
+                except ValueError:
+                    print('ВВЕДИ ЧИСЛО!!!')
+
+            elif task == '10':
+                try:
+                    radius = input('\nВведіть радіус R:')
+                    angle = input('Введіть кут повороту через пробіл\n'
+                                  '(180 30 20 = 180°30\'20\'\'):')
+                    curve = fn.curve_having_radius_angle(radius, angle)
+                    print(f'Результат {curve} м')
+
+                except ValueError:
+                    print('ВВЕДИ ЧИСЛО!!!')
+
+            elif task == '11':
+                try:
+                    tangent = input('\nВведіть тангенс Т:')
+                    measure = input('Введіть домір Д:')
+                    curve = fn.curve_having_tangent_measure(tangent, measure)
+                    print(f'Результат {curve} м')
+
+                except ValueError:
+                    print('ВВЕДИ ЧИСЛО!!!')
+
+            elif task == '12':
+                try:
+                    radius = input('Введіть радіус R:')
+                    tangent = input('Введіть тангенс Т:')
+                    angle = fn.angle_having_radius_tangent(radius, tangent) / fn.ONE_RAD
+                    angle = fn.convert_decimal_degrees_to_degrees(angle)
+                    print(f'Результат {angle}')
 
                 except ValueError:
                     print('ВВЕДИ ЧИСЛО!!!')
