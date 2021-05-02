@@ -18,19 +18,28 @@ def readout_convert_to_metres(readout):
 
 
 def calc_asec(angle):
-    return math.acos(1/angle)
+    return math.acos(1 / angle)
+
+
+def calc_sec(angle):
+    return 1 / math.cos(angle)
 
 
 def convert_grad_min_secs_to_decimal(string):
     string = string.split(' ')
     if len(string) == 3:
         degrees, minutes, seconds = string[0], string[1], string[2]
-        decimal_degrees = float(degrees) + float(minutes) / 60 + float(seconds) / 3600
+        decimal_degrees = (float(degrees) + float(minutes) / 60 + float(seconds) / 3600) * ONE_RAD
         return decimal_degrees
 
     elif len(string) == 2:
         degrees, minutes = string[0], string[1]
-        decimal_degrees = float(degrees) + float(minutes) / 60
+        decimal_degrees = (float(degrees) + float(minutes) / 60) * ONE_RAD
+        return decimal_degrees
+
+    elif len(string) == 1:
+        degrees = string[0]
+        decimal_degrees = float(degrees) * ONE_RAD
         return decimal_degrees
 
     else:
@@ -93,5 +102,30 @@ def calc_tan_having_curve_measure(c, m):
 
 def calc_tan_having_angle_radius(angle, radius):
     angle, radius = convert_grad_min_secs_to_decimal(angle), coma_replace(radius)
-    tangent = radius * math.tan((angle * ONE_RAD) / 2)
+    tangent = radius * math.tan(angle / 2)
     return round(tangent, 2)
+
+
+def calc_bisector_having_radius_angle(radius, angle):
+    angle, radius = convert_grad_min_secs_to_decimal(angle), coma_replace(radius)
+    bisector = radius * (calc_sec(angle / 2) - 1)
+    return round(bisector, 2)
+
+
+def calc_bisector_having_tangent_radius(tangent, radius):
+    tangent, radius = coma_replace(tangent), coma_replace(radius)
+    angle = 2 * math.atan(tangent / radius)
+    bisector = radius * (calc_sec(angle / 2) - 1)
+    return round(bisector, 2)
+
+
+def distance_from_0work_by_x(h1, h2, d):
+    h1, h2, d = coma_replace(h1), coma_replace(h2), coma_replace(d)
+    x = (h1 * d) / (h1 + h2)
+    return round(x, 2)
+
+
+def distance_from_0work_by_y(h1, h2, d):
+    h1, h2, d = coma_replace(h1), coma_replace(h2), coma_replace(d)
+    x = (h2 * d) / (h1 + h2)
+    return round(x, 2)
