@@ -7,6 +7,7 @@ if __name__ == '__main__':
                          '1. Допустимі нев\'язки для нівелювання різними класами\n'
                          '2. Горизонт приладу і висота проміжної точки\n'
                          '3. Нівелювання траси і колова крива\n'
+                         '4. Барометричне нівелювання\n'
                          '--->')
 
         if category == '1':
@@ -211,8 +212,49 @@ if __name__ == '__main__':
                 except ValueError:
                     print('ВВЕДИ ЧИСЛО!!!')
 
+            elif task == '13':
+                try:
+                    radius = input('\nВведіть радіус R:')
+                    angle = input('Введіть кут повороту через пробіл\n'
+                                  '(180 30 20 = 180°30\'20\'\'):')
+                    measure = fn.calc_measure_having_radius_angle(radius, angle)
+                    print(f'Результат {measure} м')
+
+                except ValueError:
+                    print('ВВЕДИ ЧИСЛО!!!')
+
             else:
                 print('ВВЕДИ ЧИСЛО!!!')
+
+        elif category == '4':
+            task = input('\n1. Тиск  на певному  поверсі, знаючи висоту поверха, бар. ступ. \n'
+                         '2. Висоту будівлі, знаючи тиск у двох точках\n'
+                         '-->')
+
+            if task == '1':
+                try:
+                    known_floor = input('\nВведіть номер відомого поверху:')
+                    pressure_on_known_floor = input('Введіть тиск на відомому поверсі:')
+                    seek_floor = input('Введіть номер шуканого поверху:')
+                    floor_height = input('Введіть висоту одного поверху:')
+                    barometric_degree = input('Введіть барометричну ступінь (якщо не вказано, то введи 11):')
+                    pressure_on_seek_floor = fn.calc_pressure_on_cert_floor(known_floor, pressure_on_known_floor,
+                                                                            seek_floor, floor_height, barometric_degree)
+                    print(f'Результат {pressure_on_seek_floor} мм рт. ст.')
+
+                except ValueError:
+                    print('ВВЕДИ ЧИСЛО!!!')
+
+            elif task == '2':
+                try:
+                    pressure_floor1 = input('\nВведіть тиск на першому поверсу:')
+                    pressure_floor2 = input('Введіть тиск на другому поверсі:')
+                    barometric_degree = input('Введіть барометричну ступінь (якщо не вказано, то введи 11):')
+                    height_difference = fn.calc_height_of_building(pressure_floor1, pressure_floor2, barometric_degree)
+                    print(f'Результат {height_difference} м')
+
+                except ValueError:
+                    print('ВВЕДИ ЧИСЛО!!!')
 
         else:
             print('ВВЕДИ ЧИСЛО!!!')

@@ -1,6 +1,5 @@
 import math
 
-
 ONE_RAD = 0.01745329252
 
 
@@ -154,3 +153,49 @@ def curve_having_tangent_measure(tangent, measure):
     tangent, measure = coma_replace(tangent), coma_replace(measure)
     curve = 2 * tangent - measure
     return round(curve, 2)
+
+
+def calc_measure_having_radius_angle(radius, angle):
+    radius, angle = coma_replace(radius), convert_grad_min_secs_to_decimal(angle)
+    measure = radius * ((2 * math.tan(angle / 2)) - ((math.pi * angle) / (180 * ONE_RAD)))
+    return round(measure, 2)
+
+
+def calc_pressure_on_cert_floor(known_floor, pressure_on_known_floor, seek_floor, floor_height, barometric_degree=11):
+    pressure_on_seek_floor = 0
+
+    pressure_on_known_floor, floor_height, barometric_degree = coma_replace(pressure_on_known_floor), coma_replace(
+        floor_height), coma_replace(barometric_degree)
+
+    known_floor, seek_floor = float(known_floor), float(seek_floor)
+
+    if known_floor > seek_floor:
+        floor_difference = known_floor - seek_floor
+        height_difference = floor_difference * floor_height
+        barometric_difference = height_difference / barometric_degree
+        pressure_on_seek_floor = pressure_on_known_floor + barometric_difference
+
+    elif known_floor < seek_floor:
+        floor_difference = seek_floor - known_floor
+        height_difference = floor_difference * floor_height
+        barometric_difference = height_difference / barometric_degree
+        pressure_on_seek_floor = pressure_on_known_floor - barometric_difference
+
+    return round(pressure_on_seek_floor, 2)
+
+
+def calc_height_of_building(pressure_floor1, pressure_floor2, barometric_degree=11):
+    pressure_floor1, pressure_floor2, barometric_degree = coma_replace(pressure_floor1), \
+                                                          coma_replace(pressure_floor2), coma_replace(barometric_degree)
+
+    height_difference = 0
+
+    if pressure_floor1 > pressure_floor2:
+        pressure_difference = pressure_floor1 - pressure_floor2
+        height_difference = pressure_difference * barometric_degree
+
+    elif pressure_floor1 < pressure_floor2:
+        pressure_difference = pressure_floor2 - pressure_floor1
+        height_difference = pressure_difference * barometric_degree
+
+    return round(height_difference, 2)
