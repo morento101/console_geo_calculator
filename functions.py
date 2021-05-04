@@ -199,3 +199,17 @@ def calc_height_of_building(pressure_floor1, pressure_floor2, barometric_degree=
         height_difference = pressure_difference * barometric_degree
 
     return round(height_difference, 2)
+
+
+def permissible_height_residual(perimeter, n):
+    perimeter, n = coma_replace(perimeter), coma_replace(n)
+    perm_height_res = (0.04 * perimeter) / math.sqrt(n)
+    return perm_height_res
+
+
+def h2_having_h1_l_i(h1, h, i, l):
+    h1, h, l, i = coma_replace(h1), coma_replace(h), coma_replace(l), coma_replace(i)
+    print(h1, h, i, l)
+    h2 = h1 + h + i - l
+    print(h1, h2, h, i, l)
+    return round(h2, 2)

@@ -8,6 +8,8 @@ if __name__ == '__main__':
                          '2. Горизонт приладу і висота проміжної точки\n'
                          '3. Нівелювання траси і колова крива\n'
                          '4. Барометричне нівелювання\n'
+                         '5. Допустима висотна нев\'язка й обчислення висоти пікету\n'
+                         '6. Тахеометричне знімання\n'
                          '--->')
 
         if category == '1':
@@ -252,6 +254,33 @@ if __name__ == '__main__':
                     barometric_degree = input('Введіть барометричну ступінь (якщо не вказано, то введи 11):')
                     height_difference = fn.calc_height_of_building(pressure_floor1, pressure_floor2, barometric_degree)
                     print(f'Результат {height_difference} м')
+
+                except ValueError:
+                    print('ВВЕДИ ЧИСЛО!!!')
+
+        elif category == '5':
+            task = input('\n1. Допустима висотна нев\'язка, знаючи периметр\n'
+                         '2. Висота пікету, маючи висоту точки стояння, перевищення, l, i\n'
+                         '-->')
+
+            if task == '1':
+                try:
+                    perimeter = input('\nВведіть периметр:')
+                    n = input('Введіть к-сть перевищень:')
+                    perm_height_residual = fn.permissible_height_residual(perimeter, n)
+                    print(f'Результат +-{perm_height_residual} м')
+
+                except ValueError:
+                    print('ВВЕДИ ЧИСЛО!!!')
+
+            elif task == '2':
+                try:
+                    h1 = input('\nВведіть висоту точки стояння:')
+                    h = input('Введіть перевищення h:')
+                    i = input('Введіть висоту приладу i:')
+                    l = input('Введуть висоту наведення l:')
+                    h2 = fn.h2_having_h1_l_i(h1, h, i, l)
+                    print(f'Результат {h2} м')
 
                 except ValueError:
                     print('ВВЕДИ ЧИСЛО!!!')
