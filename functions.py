@@ -213,3 +213,19 @@ def h2_having_h1_l_i(h1, h, i, l):
     h2 = h1 + h + i - l
     print(h1, h2, h, i, l)
     return round(h2, 2)
+
+
+def calc_zero_spot(kp, kl):
+    kp, kl = kp.split(' '), kl.split(' ')
+    kp_minutes = int(kp[1])
+    kl_minutes = int(kl[1])
+    z_spot_minutes = (kp_minutes + kl_minutes) / 2
+    return z_spot_minutes
+
+def calc_angle_having_mo_kp(zero_spot, kp):
+    zero_spot, kp = kp.split(' '), zero_spot.split(' ')
+    zero_spot_minutes = int(zero_spot[1])
+    kp_minutes = int(kp[1])
+    angle = (zero_spot_minutes - kp_minutes)
+    return angle
+
