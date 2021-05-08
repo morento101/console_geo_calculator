@@ -204,11 +204,11 @@ if __name__ == '__main__':
 
             elif task == '12':
                 try:
-                    radius = input('Введіть радіус R:')
+                    radius = input('\nВведіть радіус R:')
                     tangent = input('Введіть тангенс Т:')
                     angle = fn.angle_having_radius_tangent(radius, tangent) / fn.ONE_RAD
-                    angle = fn.convert_decimal_degrees_to_degrees(angle)
-                    print(f'Результат {angle}')
+                    degrees, minutes, seconds = fn.convert_decimal_degrees_to_degrees(angle)
+                    print(f'Результат {degrees}°{minutes}\'{seconds}\'\'')
 
                 except ValueError:
                     print('ВВЕДИ ЧИСЛО!!!')
@@ -261,6 +261,8 @@ if __name__ == '__main__':
                          '2. Висота пікету, маючи висоту точки стояння, перевищення, l, i\n'
                          '3. Місце нуля\n'
                          '4. Кут нахилу при МО і КП\n'
+                         '5. Кут нахилу при МО і КЛ\n'
+                         '6. Кут нахилу при КЛ і КП\n'
                          '-->')
 
             if task == '1':
@@ -287,12 +289,12 @@ if __name__ == '__main__':
 
             elif task == '3':
                 try:
-                    kp = input('Введіть відлік КП через пробіл:'
+                    kp = input('\nВведіть відлік КП через пробіл:'
                                '(180 30 20 = 180°30\'20\'\'):')
                     kl = input('Введіть відлік КЛ через пробіл'
                                '(180 30 20 = 180°30\'20\'\'):')
-                    zero_spot = fn.calc_zero_spot(kp, kl)
-                    print(f'Результат 0°{zero_spot}\'')
+                    z_spot_degrees, z_spot_minutes, z_spot_seconds = fn.calc_zero_spot(kp, kl)
+                    print(f'Результат {z_spot_degrees}°{z_spot_minutes}\'{z_spot_seconds}\'\'')
 
                 except ValueError:
                     print('ВВЕДИ ЧИСЛО!!!')
@@ -303,11 +305,31 @@ if __name__ == '__main__':
                                       '(180 30 20 = 180°30\'20\'\'):')
                     kp = input('Введіть відлік КП через пробіл\n'
                                '(180 30 20 = 180°30\'20\'\'):')
-                    angle = fn.calc_angle_having_mo_kp(zero_spot, kp)
-                    print(f'Результат 0°{angle}\'')
+                    degrees, minutes, seconds = fn.calc_angle_having_mo_kp(zero_spot, kp)
+                    print(f'Результат {degrees}°{minutes}\'{seconds}\'\'')
 
                 except ValueError:
                     print('ВВЕДИ ЧИСЛО!!!')
+
+            elif task == '5':
+                try:
+                    zero_spot = input('\nВведіть відлік МО через пробіл\n'
+                                      '(180 30 20 = 180°30\'20\'\'):')
+                    kl = input('Введіть відлік КЛ через пробіл\n'
+                               '(180 30 20 = 180°30\'20\'\'):')
+                    degrees, minutes, seconds = fn.calc_angle_having_mo_kp(zero_spot, kl)
+                    print(f'Результат {degrees}°{minutes}\'{seconds}\'\'')
+
+                except ValueError:
+                    print('ВВЕДИ ЧИСЛО!!!')
+
+            elif task == '6':
+                kl = input('\nВведіть відлік КЛ через пробіл\n'
+                           '(180 30 20 = 180°30\'20\'\'):')
+                kp = input('Введіть відлік КП через пробіл\n'
+                           '(180 30 20 = 180°30\'20\'\'):')
+                degrees, minutes, seconds = fn.angle_having_kl_kp(kl, kp)
+                print(f'Результат {degrees}°{minutes}\'{seconds}\'\'')
 
         else:
             print('ВВЕДИ ЧИСЛО!!!')

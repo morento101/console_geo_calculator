@@ -1,4 +1,6 @@
 import math
+import re
+
 
 ONE_RAD = 0.01745329252
 
@@ -28,21 +30,40 @@ def convert_grad_min_secs_to_decimal(string):
     string = string.split(' ')
     if len(string) == 3:
         degrees, minutes, seconds = string[0], string[1], string[2]
-        decimal_degrees = (float(degrees) + float(minutes) / 60 + float(seconds) / 3600) * ONE_RAD
+        decimal_degrees = (float(degrees) + float(minutes) / 60 + float(seconds) / 3600)
         return decimal_degrees
 
     elif len(string) == 2:
         degrees, minutes = string[0], string[1]
-        decimal_degrees = (float(degrees) + float(minutes) / 60) * ONE_RAD
+        decimal_degrees = (float(degrees) + float(minutes) / 60)
         return decimal_degrees
 
     elif len(string) == 1:
         degrees = string[0]
-        decimal_degrees = float(degrees) * ONE_RAD
+        decimal_degrees = float(degrees)
         return decimal_degrees
 
     else:
         print('НЕПРАВИЛЬНИЙ ФОРМАТ!!!')
+
+
+def convert_decimal_deg_to_rad(angle):
+    rad = (angle * math.pi) / 180
+    return rad
+
+
+def convert_decimal_degrees_to_degrees(angle):
+    degrees = int(angle)
+    minutes = int((angle - degrees) * 60)
+    seconds = round((angle - degrees - (minutes / 60)) * 3600)
+    return degrees, minutes, seconds
+
+
+def dividing_degrees_minutes_seconds(angle):
+    angle = str(angle)
+    angle = re.split('°|`|``', angle)
+    angle_degrees, angle_minutes, angle_seconds = angle[0], angle[1], angle[2]
+    return angle_degrees, angle_minutes, angle_seconds
 
 
 def permissible_residual_leveling_4class(length):
@@ -101,12 +122,14 @@ def calc_tan_having_curve_measure(c, m):
 
 def calc_tan_having_angle_radius(angle, radius):
     angle, radius = convert_grad_min_secs_to_decimal(angle), coma_replace(radius)
+    angle = convert_decimal_deg_to_rad(angle)
     tangent = radius * math.tan(angle / 2)
     return round(tangent, 2)
 
 
 def calc_bisector_having_radius_angle(radius, angle):
     angle, radius = convert_grad_min_secs_to_decimal(angle), coma_replace(radius)
+    angle = convert_decimal_deg_to_rad(angle)
     bisector = radius * (calc_sec(angle / 2) - 1)
     return round(bisector, 2)
 
@@ -115,13 +138,6 @@ def angle_having_radius_tangent(radius, tangent):
     radius, tangent = coma_replace(radius), coma_replace(tangent)
     angle = 2 * math.atan(tangent / radius)
     return angle
-
-
-def convert_decimal_degrees_to_degrees(angle):
-    degrees = int(angle)
-    minutes = int((angle - degrees) * 60)
-    seconds = round((angle - degrees - (minutes / 60)) * 3600)
-    return f'{degrees}°{minutes}\'{seconds}\'\''
 
 
 def calc_bisector_having_tangent_radius(tangent, radius):
@@ -145,6 +161,7 @@ def distance_from_0work_by_y(h1, h2, d):
 
 def curve_having_radius_angle(radius, angle):
     radius, angle = coma_replace(radius), convert_grad_min_secs_to_decimal(angle)
+    angle = convert_decimal_deg_to_rad(angle)
     curve = radius * ((math.pi * angle) / (180 * ONE_RAD))
     return round(curve, 2)
 
@@ -157,6 +174,7 @@ def curve_having_tangent_measure(tangent, measure):
 
 def calc_measure_having_radius_angle(radius, angle):
     radius, angle = coma_replace(radius), convert_grad_min_secs_to_decimal(angle)
+    angle = convert_decimal_deg_to_rad(angle)
     measure = radius * ((2 * math.tan(angle / 2)) - ((math.pi * angle) / (180 * ONE_RAD)))
     return round(measure, 2)
 
@@ -216,16 +234,28 @@ def h2_having_h1_l_i(h1, h, i, l):
 
 
 def calc_zero_spot(kp, kl):
-    kp, kl = kp.split(' '), kl.split(' ')
-    kp_minutes = int(kp[1])
-    kl_minutes = int(kl[1])
-    z_spot_minutes = (kp_minutes + kl_minutes) / 2
-    return z_spot_minutes
+    kp, kl = convert_grad_min_secs_to_decimal(kp), convert_grad_min_secs_to_decimal(kl)
+    z_spot = (kp + kl) / 2
+    z_spot_degrees, z_spot_minutes, z_spot_seconds = convert_decimal_degrees_to_degrees(z_spot)
+    return z_spot_degrees, z_spot_minutes, z_spot_seconds
+
 
 def calc_angle_having_mo_kp(zero_spot, kp):
-    zero_spot, kp = kp.split(' '), zero_spot.split(' ')
-    zero_spot_minutes = int(zero_spot[1])
-    kp_minutes = int(kp[1])
-    angle = (zero_spot_minutes - kp_minutes)
-    return angle
+    zero_spot, kp = convert_grad_min_secs_to_decimal(zero_spot), convert_grad_min_secs_to_decimal(kp)
+    angle = (zero_spot - kp)
+    angle_degrees, angle_minutes, angle_seconds = convert_decimal_degrees_to_degrees(angle)
+    return angle_degrees, angle_minutes, angle_seconds
 
+
+def calc_angle_having_mo_kl(zero_spot, kl):
+    zero_spot, kl = convert_grad_min_secs_to_decimal(zero_spot), convert_grad_min_secs_to_decimal(kl)
+    angle = kl - zero_spot
+    angle_degrees, angle_minutes, angle_seconds = convert_decimal_degrees_to_degrees(angle)
+    return angle_degrees, angle_minutes, angle_seconds
+
+
+def angle_having_kl_kp(kl, kp):
+    kl, kp = convert_grad_min_secs_to_decimal(kl), convert_grad_min_secs_to_decimal(kp)
+    angle = (kl - kp) / 2
+    angle_degrees, angle_minutes, angle_seconds = convert_decimal_degrees_to_degrees(angle)
+    return angle_degrees, angle_minutes, angle_seconds
