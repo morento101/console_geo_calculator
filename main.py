@@ -263,6 +263,8 @@ if __name__ == '__main__':
                          '4. Кут нахилу при МО і КП\n'
                          '5. Кут нахилу при МО і КЛ\n'
                          '6. Кут нахилу при КЛ і КП\n'
+                         '7. Перевищення h, маючи віддяль D, верт. кут v, висоту приладу i, вис. наведення l\n'
+                         '8. Абсолютну лінійну нев\'язку, маючи координати поч. і кін. точок X, Y\n' 
                          '-->')
 
             if task == '1':
@@ -324,12 +326,40 @@ if __name__ == '__main__':
                     print('ВВЕДИ ЧИСЛО!!!')
 
             elif task == '6':
-                kl = input('\nВведіть відлік КЛ через пробіл\n'
-                           '(180 30 20 = 180°30\'20\'\'):')
-                kp = input('Введіть відлік КП через пробіл\n'
-                           '(180 30 20 = 180°30\'20\'\'):')
-                degrees, minutes, seconds = fn.angle_having_kl_kp(kl, kp)
-                print(f'Результат {degrees}°{minutes}\'{seconds}\'\'')
+                try:
+                    kl = input('\nВведіть відлік КЛ через пробіл\n'
+                               '(180 30 20 = 180°30\'20\'\'):')
+                    kp = input('Введіть відлік КП через пробіл\n'
+                               '(180 30 20 = 180°30\'20\'\'):')
+                    degrees, minutes, seconds = fn.angle_having_kl_kp(kl, kp)
+                    print(f'Результат {degrees}°{minutes}\'{seconds}\'\'')
+
+                except ValueError:
+                    print('ВВЕДИ ЧИСЛО!!!')
+
+            elif task == '7':
+                try:
+                    d = input('\nВведіть виміряну віддаль D:')
+                    v = input('Введіть верт. кут v через пробіл\n'
+                              '(180 30 20 = 180°30\'20\'\'):')
+                    i = input('Введіть висоту приладу i:')
+                    l = input('Введіть висоту наведення l\n'
+                              '(Якщо не вказано  то дорівнює i):')
+                    h = fn.h_having_d_v_i_l(d, v, i, l)
+                    print(f'Результат {round(h, 2)} м')
+
+                except ValueError:
+                    print('ВВЕДИ ЧИСЛО!!!')
+
+            elif task == '8':
+                x1 = input('Введіть Х початкової точки:')
+                y1 = input('Введіть Y початкової точки:')
+                xn = input('Введіть Х кінцевої точки:')
+                yn = input('Введіть Y кінцевої точки:')
+                practice_x = input('Введіть практичну суму Х:')
+                practice_y = input('Введіть практичну суму Y:')
+                abs_lin_residual = fn.absolute_lineal_residual_having_coords(x1, y1, xn, yn, practice_x, practice_y)
+                print(f'Результат {round(abs_lin_residual, 2)} м')
 
         else:
             print('ВВЕДИ ЧИСЛО!!!')

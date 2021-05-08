@@ -1,5 +1,4 @@
 import math
-import re
 
 
 ONE_RAD = 0.01745329252
@@ -9,6 +8,9 @@ def coma_replace(s):
     s = str(s)
     if ',' in s:
         s = s.replace(',', '.')
+    if '−' in s:
+        s = s.replace('−', '')
+        s = 0 - float(s)
     return float(s)
 
 
@@ -30,13 +32,33 @@ def convert_grad_min_secs_to_decimal(string):
     string = string.split(' ')
     if len(string) == 3:
         degrees, minutes, seconds = string[0], string[1], string[2]
-        decimal_degrees = (float(degrees) + float(minutes) / 60 + float(seconds) / 3600)
-        return decimal_degrees
+
+        if int(degrees) > 0:
+            decimal_degrees = (float(degrees) + float(minutes) / 60 + float(seconds) / 3600)
+            return decimal_degrees
+
+        elif int(degrees) < 0:
+            decimal_degrees = (float(degrees) - float(minutes) / 60 - float(seconds) / 3600)
+            return decimal_degrees
+
+        elif int(degrees) == 0:
+            decimal_degrees = 0 + float(minutes) / 60
+            return decimal_degrees
 
     elif len(string) == 2:
         degrees, minutes = string[0], string[1]
-        decimal_degrees = (float(degrees) + float(minutes) / 60)
-        return decimal_degrees
+
+        if int(degrees) > 0:
+            decimal_degrees = (float(degrees) + float(minutes) / 60)
+            return decimal_degrees
+
+        elif int(degrees) < 0:
+            decimal_degrees = (float(degrees) - float(minutes) / 60)
+            return decimal_degrees
+
+        elif int(degrees) == 0:
+            decimal_degrees = 0 + float(minutes) / 60
+            return decimal_degrees
 
     elif len(string) == 1:
         degrees = string[0]
@@ -57,13 +79,6 @@ def convert_decimal_degrees_to_degrees(angle):
     minutes = int((angle - degrees) * 60)
     seconds = round((angle - degrees - (minutes / 60)) * 3600)
     return degrees, minutes, seconds
-
-
-def dividing_degrees_minutes_seconds(angle):
-    angle = str(angle)
-    angle = re.split('°|`|``', angle)
-    angle_degrees, angle_minutes, angle_seconds = angle[0], angle[1], angle[2]
-    return angle_degrees, angle_minutes, angle_seconds
 
 
 def permissible_residual_leveling_4class(length):
@@ -259,3 +274,25 @@ def angle_having_kl_kp(kl, kp):
     angle = (kl - kp) / 2
     angle_degrees, angle_minutes, angle_seconds = convert_decimal_degrees_to_degrees(angle)
     return angle_degrees, angle_minutes, angle_seconds
+
+
+def h_having_d_v_i_l(d, v, i, l):
+    d, i, l = coma_replace(d), coma_replace(i), coma_replace(l)
+    print(d, i, l)
+    v = convert_grad_min_secs_to_decimal(v)
+    print(v)
+    v = convert_decimal_deg_to_rad(v)
+    print(v)
+    h = d * math.tan(v) + i - l
+    return h
+
+
+def absolute_lineal_residual_having_coords(x1, y1, xn, yn, practice_x, practice_y):
+    x1, y1, xn, yn, practice_x, practice_y = coma_replace(x1), coma_replace(y1), coma_replace(xn), coma_replace(yn), \
+                                             coma_replace(practice_x), coma_replace(practice_y)
+    theory_x = xn - x1
+    theory_y = yn - y1
+    residual_x = practice_x - theory_x
+    residual_y = practice_y - theory_y
+    abs_lin_residual = math.sqrt(residual_x ** 2 + residual_y ** 2)
+    return abs_lin_residual
