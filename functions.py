@@ -30,8 +30,10 @@ def calc_sec(angle):
 
 def convert_grad_min_secs_to_decimal(string):
     string = string.split(' ')
+
     if len(string) == 3:
         degrees, minutes, seconds = string[0], string[1], string[2]
+        degrees, minutes, seconds = coma_replace(degrees), coma_replace(minutes), coma_replace(seconds)
 
         if int(degrees) > 0:
             decimal_degrees = (float(degrees) + float(minutes) / 60 + float(seconds) / 3600)
@@ -47,6 +49,7 @@ def convert_grad_min_secs_to_decimal(string):
 
     elif len(string) == 2:
         degrees, minutes = string[0], string[1]
+        degrees, minutes = coma_replace(degrees), coma_replace(minutes)
 
         if int(degrees) > 0:
             decimal_degrees = (float(degrees) + float(minutes) / 60)
@@ -62,6 +65,7 @@ def convert_grad_min_secs_to_decimal(string):
 
     elif len(string) == 1:
         degrees = string[0]
+        degrees = coma_replace(degrees)
         decimal_degrees = float(degrees)
         return decimal_degrees
 
@@ -278,11 +282,8 @@ def angle_having_kl_kp(kl, kp):
 
 def h_having_d_v_i_l(d, v, i, l):
     d, i, l = coma_replace(d), coma_replace(i), coma_replace(l)
-    print(d, i, l)
     v = convert_grad_min_secs_to_decimal(v)
-    print(v)
     v = convert_decimal_deg_to_rad(v)
-    print(v)
     h = d * math.tan(v) + i - l
     return h
 
@@ -296,3 +297,62 @@ def absolute_lineal_residual_having_coords(x1, y1, xn, yn, practice_x, practice_
     residual_y = practice_y - theory_y
     abs_lin_residual = math.sqrt(residual_x ** 2 + residual_y ** 2)
     return abs_lin_residual
+
+
+def horizontal_projection_string(d, v):
+    d = coma_replace(d)
+    v = convert_grad_min_secs_to_decimal(v)
+    v = convert_decimal_deg_to_rad(v)
+    horizontal_projection = d * math.cos(v)
+    return horizontal_projection
+
+
+def horizontal_projection_rangefinder(d, v):
+    d = coma_replace(d)
+    v = convert_grad_min_secs_to_decimal(v)
+    v = convert_decimal_deg_to_rad(v)
+    horizontal_projection = d * (math.cos(v) ** 2)
+    return horizontal_projection
+
+
+def height_residual(hst, hfn, pr_sum_excess):
+    hst, hfn, pr_sum_excess = coma_replace(hst), coma_replace(hfn), coma_replace(pr_sum_excess)
+    te_sum_excess = hfn - hst
+    residual = pr_sum_excess - te_sum_excess
+    return residual
+
+
+def hor_proj_having_coords(x1, y1, xn, yn):
+    x1, y1, xn, yn = coma_replace(x1), coma_replace(y1), coma_replace(xn), coma_replace(yn)
+    difference_x = xn - x1
+    difference_y = yn - y1
+    horizontal_projection = math.sqrt(difference_x ** 2 + difference_y ** 2)
+    return horizontal_projection
+
+
+def directory_angle(x1, y1, xn, yn):
+    x1, y1, xn, yn = coma_replace(x1), coma_replace(y1), coma_replace(xn), coma_replace(yn)
+
+    difference_x = xn - x1
+    difference_y = yn - y1
+
+    tan_r = difference_y / difference_x
+    r = math.atan(tan_r)
+
+    dir_angle = 0
+
+    if difference_x > 0 and difference_y > 0:
+        dir_angle = r
+
+    elif difference_x < 0 and difference_y > 0:
+        dir_angle = 180 - r
+
+    elif difference_x < 0 and difference_y < 0:
+        dir_angle = 180 + r
+
+    elif difference_x > 0 and difference_y < 0:
+        dir_angle = (2 * 180) - r
+
+    angle_degrees, angle_minutes, angle_seconds = convert_decimal_degrees_to_degrees(dir_angle)
+
+    return angle_degrees, angle_minutes, angle_seconds

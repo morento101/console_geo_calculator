@@ -264,7 +264,12 @@ if __name__ == '__main__':
                          '5. Кут нахилу при МО і КЛ\n'
                          '6. Кут нахилу при КЛ і КП\n'
                          '7. Перевищення h, маючи віддяль D, верт. кут v, висоту приладу i, вис. наведення l\n'
-                         '8. Абсолютну лінійну нев\'язку, маючи координати поч. і кін. точок X, Y\n' 
+                         '8. Абсолютну лінійну нев\'язку, маючи координати поч. і кін. точок X, Y\n'
+                         '9. Горизонтальну проекцію d, маючи відстань D виміряну мірною стрічкою і кут нахилу v\n'
+                         '10. Горизонтальну проекцію d, маючи відстань D виміряну віддалеміром і кут нахилу v\n'
+                         '11. Висотну нев\'язку, маючи висоту початкової та кінцевої точок Hпоч і Hкін та практичну '
+                         'суму первищень Σhсер\n'
+                         '12. Горизонтальну проекцію, маючи координати початкової та кінцевої точок\n'
                          '-->')
 
             if task == '1':
@@ -352,14 +357,71 @@ if __name__ == '__main__':
                     print('ВВЕДИ ЧИСЛО!!!')
 
             elif task == '8':
-                x1 = input('Введіть Х початкової точки:')
+                try:
+                    x1 = input('\nВведіть Х початкової точки:')
+                    y1 = input('Введіть Y початкової точки:')
+                    xn = input('Введіть Х кінцевої точки:')
+                    yn = input('Введіть Y кінцевої точки:')
+                    practice_x = input('Введіть практичну суму Х:')
+                    practice_y = input('Введіть практичну суму Y:')
+                    abs_lin_residual = fn.absolute_lineal_residual_having_coords(x1, y1, xn, yn, practice_x, practice_y)
+                    print(f'Результат {round(abs_lin_residual, 2)} м')
+
+                except ValueError:
+                    print('ВВЕДИ ЧИСЛО!!!')
+
+            elif task == '9':
+                try:
+                    d = input('\nВведіть відстань D:')
+                    v = input('Введіть кут нахилу v через пробіл\n'
+                              '(180 30 20 = 180°30\'20\'\'):')
+                    horizontal_projection = fn.horizontal_projection_string(d, v)
+                    print(f'Результат {round(horizontal_projection, 2)} м')
+
+                except ValueError:
+                    print('ВВЕДИ ЧИСЛО!!!')
+
+            elif task == '10':
+                try:
+                    d = input('\nВведіть відстань D:')
+                    v = input('Введіть кут нахилу v через пробіл\n'
+                              '(180 30 20 = 180°30\'20\'\'):')
+                    horizontal_projection = fn.horizontal_projection_rangefinder(d, v)
+                    print(f'Результат {round(horizontal_projection, 2)} м')
+
+                except ValueError:
+                    print('ВВЕДИ ЧИСЛО!!!')
+
+            elif task == '11':
+                try:
+                    hst = input('\nВведіть висоту початкової точки:')
+                    hfn = input('Введіть висоту кінцевої точки:')
+                    pr_sum_excess = input('Введіть практичну суму всіх перевищень:')
+                    height_residual = fn.height_residual(hst, hfn, pr_sum_excess)
+                    print(f'Результат {round(height_residual, 2)} м')
+
+                except ValueError:
+                    print('ВВЕДИ ЧИСЛО!!!')
+
+            elif task == '12':
+                try:
+                    x1 = input('\nВведіть Х початкової точки:')
+                    y1 = input('Введіть Y початкової точки:')
+                    xn = input('Введіть Х кінцевої точки:')
+                    yn = input('Введіть Y кінцевої точки:')
+                    horizontal_projection = fn.hor_proj_having_coords(x1, y1, xn, yn)
+                    print(f'Результат {round(horizontal_projection, 2)} м')
+
+                except ValueError:
+                    print('ВВЕДИ ЧИСЛО!!!')
+
+            elif task == '13':
+                x1 = input('\nВведіть Х початкової точки:')
                 y1 = input('Введіть Y початкової точки:')
                 xn = input('Введіть Х кінцевої точки:')
                 yn = input('Введіть Y кінцевої точки:')
-                practice_x = input('Введіть практичну суму Х:')
-                practice_y = input('Введіть практичну суму Y:')
-                abs_lin_residual = fn.absolute_lineal_residual_having_coords(x1, y1, xn, yn, practice_x, practice_y)
-                print(f'Результат {round(abs_lin_residual, 2)} м')
+                angle_degrees, angle_minutes, angle_seconds = fn.directory_angle(x1, y1, xn, yn)
+                print(f'Результат {angle_degrees}°{angle_minutes}\'{angle_seconds}\'\'')
 
         else:
-            print('ВВЕДИ ЧИСЛО!!!')
+            print('ВВЕДИ ЧИСЛО!!!')  #TODO: fix this
