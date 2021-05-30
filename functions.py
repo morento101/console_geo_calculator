@@ -85,6 +85,11 @@ def convert_decimal_degrees_to_degrees(angle):
     return degrees, minutes, seconds
 
 
+def convert_rad_to_decimal(angle):
+    angle = angle * (180 / math.pi)
+    return angle
+
+
 def permissible_residual_leveling_4class(length):
     length = coma_replace(length)
     perm_res = 20 * math.sqrt(length)
@@ -284,6 +289,7 @@ def h_having_d_v_i_l(d, v, i, l):
     d, i, l = coma_replace(d), coma_replace(i), coma_replace(l)
     v = convert_grad_min_secs_to_decimal(v)
     v = convert_decimal_deg_to_rad(v)
+    d = d * (math.cos(v) ** 2)
     h = d * math.tan(v) + i - l
     return h
 
@@ -338,6 +344,7 @@ def directory_angle(x1, y1, xn, yn):
 
     tan_r = difference_y / difference_x
     r = math.atan(tan_r)
+    r = convert_rad_to_decimal(r)
 
     dir_angle = 0
 
@@ -356,3 +363,76 @@ def directory_angle(x1, y1, xn, yn):
     angle_degrees, angle_minutes, angle_seconds = convert_decimal_degrees_to_degrees(dir_angle)
 
     return angle_degrees, angle_minutes, angle_seconds
+
+
+def rumb_having_coords(x1, y1, xn, yn):
+    x1, y1, xn, yn = coma_replace(x1), coma_replace(y1), coma_replace(xn), coma_replace(yn)
+
+    difference_x = xn - x1
+    difference_y = yn - y1
+
+    tan_r = difference_y / difference_x
+    r = abs(math.atan(tan_r))
+    r = convert_rad_to_decimal(r)
+
+    angle_degrees, angle_minutes, angle_seconds = convert_decimal_degrees_to_degrees(r)
+
+    if difference_x > 0 and difference_y > 0:
+        r = f'Пн.Сх {angle_degrees}°{angle_minutes}\'{angle_seconds}\'\''
+
+    elif difference_x < 0 and difference_y > 0:
+        r = f'Пд.Сх {angle_degrees}°{angle_minutes}\'{angle_seconds}\'\''
+
+    elif difference_x < 0 and difference_y < 0:
+        r = f'Пд.Зх {angle_degrees}°{angle_minutes}\'{angle_seconds}\'\''
+
+    elif difference_x > 0 and difference_y < 0:
+        r = f'Пн.Зх {angle_degrees}°{angle_minutes}\'{angle_seconds}\'\''
+
+    return r
+
+
+def excess_having_d_v_i_l(d, v, i, l):
+    d, i, l = coma_replace(d), coma_replace(i), coma_replace(l)
+    v = convert_grad_min_secs_to_decimal(v)
+    v = convert_decimal_deg_to_rad(v)
+    h = d * math.tan(v) + i - l
+    return h
+
+
+def relative_residual(x1, y1, xn, yn, xpr, ypr, p):
+    x1, y1, xn, yn, xpr, ypr, p = coma_replace(x1), coma_replace(y1), coma_replace(xn), coma_replace(yn), \
+                                  coma_replace(xpr), coma_replace(ypr), coma_replace(p)
+
+    difference_x = xn - x1
+    difference_y = yn - y1
+    residual_x = xpr - difference_x
+    residual_y = ypr - difference_y
+
+    abs_residual = math.sqrt((residual_x ** 2) + (residual_y ** 2))
+    abs_residual = round(abs_residual, 2)
+    rel_residual = p / abs_residual
+
+    return rel_residual
+
+
+def abs_lin_residual_closed():
+    pass
+
+
+def abs_lin_residual_unclosed(x1, y1, xn, yn, xpr, ypr):
+    x1, y1, xn, yn, xpr, ypr = coma_replace(x1), coma_replace(y1), coma_replace(xn), coma_replace(yn), \
+                                  coma_replace(xpr), coma_replace(ypr)
+    difference_x = xn - x1
+    difference_y = yn - y1
+    residual_x = xpr - difference_x
+    residual_y = ypr - difference_y
+
+    abs_residual = math.sqrt((residual_x ** 2) + (residual_y ** 2))
+    abs_residual = round(abs_residual, 2)
+
+    return abs_residual
+
+
+
+
