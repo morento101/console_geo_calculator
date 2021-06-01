@@ -416,10 +416,6 @@ def relative_residual(x1, y1, xn, yn, xpr, ypr, p):
     return rel_residual
 
 
-def abs_lin_residual_closed():
-    pass
-
-
 def abs_lin_residual_unclosed(x1, y1, xn, yn, xpr, ypr):
     x1, y1, xn, yn, xpr, ypr = coma_replace(x1), coma_replace(y1), coma_replace(xn), coma_replace(yn), \
                                   coma_replace(xpr), coma_replace(ypr)
@@ -432,7 +428,3 @@ def abs_lin_residual_unclosed(x1, y1, xn, yn, xpr, ypr):
     abs_residual = round(abs_residual, 2)
 
     return abs_residual
-
-
-
-
