@@ -17,6 +17,8 @@ def coma_replace(s):
 def readout_convert_to_metres(readout):
     if len(readout) == 4:
         readout = readout[0] + '.' + readout[1:]
+    else:
+        readout = ''
     return float(readout)
 
 

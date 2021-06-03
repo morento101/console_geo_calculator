@@ -24,7 +24,7 @@ if __name__ == '__main__':
                     print(f'Результат: {perm_res} мм')
 
                 except ValueError:
-                    print('ВВЕДИ ЧИСЛО!!!')
+                    print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')
 
             elif task == '2':
                 try:
@@ -33,10 +33,10 @@ if __name__ == '__main__':
                     print(f'Результат: {perm_res} мм')
 
                 except ValueError:
-                    print('ВВЕДИ ЧИСЛО!!!')
+                    print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')
 
             else:
-                print('ВВЕДИ ЧИСЛО!!!')
+                print('ОБЕРІТЬ ЗАДАЧУ, ВВІВШИ ЧИСЛО ВІД 1 ДО 2')
 
         elif category == '2':
             task = input('\nОбчислити:\n'
@@ -53,7 +53,7 @@ if __name__ == '__main__':
                     print(f'Результат: {dev_horizon} м')
 
                 except ValueError:
-                    print('ВВЕДИ ЧИСЛО!!!')
+                    print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')
 
             elif task == '2':
                 try:
@@ -64,10 +64,10 @@ if __name__ == '__main__':
                     print(f'Результат: {inter_point_h} м')
 
                 except ValueError:
-                    print('ВВЕДИ ЧИСЛО!!!')
+                    print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')
 
             else:
-                print('ВВЕДИ ЧИСЛО!!!')
+                print('ОБЕРІТЬ ЗАДАЧУ, ВВІВШИ ЧИСЛО ВІД 1 ДО 2')
 
         elif category == '3':
             task = input('\nОбчислити:\n' +
@@ -95,7 +95,7 @@ if __name__ == '__main__':
                     print(f'Результат: {h2} м')
 
                 except ValueError:
-                    print('ВВЕДИ ЧИСЛО!!!')
+                    print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')
 
             elif task == '2':
                 try:
@@ -106,7 +106,7 @@ if __name__ == '__main__':
                     print(f'Результат {slope} проміле')
 
                 except ValueError:
-                    print('ВВЕДИ ЧИСЛО!!!')
+                    print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')
 
             elif task == '3':
                 try:
@@ -116,7 +116,7 @@ if __name__ == '__main__':
                     print(f'Результат {tangent} м')
 
                 except ValueError:
-                    print('ВВЕДИ ЧИСЛО!!!')
+                    print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')
 
             elif task == '4':
                 try:
@@ -126,7 +126,7 @@ if __name__ == '__main__':
                     print(f'Результат {tangent} м')
 
                 except ValueError:
-                    print('ВВЕДИ ЧИСЛО!!!')
+                    print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')
 
             elif task == '5':
                 try:
@@ -137,7 +137,7 @@ if __name__ == '__main__':
                     print(f'Результат {tangent} м')
 
                 except ValueError:
-                    print('ВВЕДИ ЧИСЛО!!!')
+                    print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')
 
             elif task == '6':
                 try:
@@ -148,7 +148,7 @@ if __name__ == '__main__':
                     print(f'Результат {bisector} м')
 
                 except ValueError:
-                    print('ВВЕДИ ЧИСЛО!!!')
+                    print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')
 
             elif task == '7':
                 try:
@@ -158,7 +158,7 @@ if __name__ == '__main__':
                     print(f'Результат {bisector} м')
 
                 except ValueError:
-                    print('ВВЕДИ ЧИСЛО!!!')
+                    print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')
 
             elif task == '8':
                 try:
@@ -169,7 +169,7 @@ if __name__ == '__main__':
                     print(f'Результат {x} м')
 
                 except ValueError:
-                    print('ВВЕДИ ЧИСЛО!!!')
+                    print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')
 
             elif task == '9':
                 try:
@@ -180,7 +180,7 @@ if __name__ == '__main__':
                     print(f'Результат {y} м')
 
                 except ValueError:
-                    print('ВВЕДИ ЧИСЛО!!!')
+                    print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')
 
             elif task == '10':
                 try:
@@ -191,7 +191,7 @@ if __name__ == '__main__':
                     print(f'Результат {curve} м')
 
                 except ValueError:
-                    print('ВВЕДИ ЧИСЛО!!!')
+                    print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')
 
             elif task == '11':
                 try:
@@ -201,7 +201,7 @@ if __name__ == '__main__':
                     print(f'Результат {curve} м')
 
                 except ValueError:
-                    print('ВВЕДИ ЧИСЛО!!!')
+                    print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')
 
             elif task == '12':
                 try:
@@ -212,18 +212,21 @@ if __name__ == '__main__':
                     print(f'Результат {degrees}°{minutes}\'{seconds}\'\'')
 
                 except ValueError:
-                    print('ВВЕДИ ЧИСЛО!!!')
+                    print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')
 
             elif task == '13':
+                try:
+                    radius = input('\nВведіть радіус R:')
+                    angle = input('Введіть кут повороту через пробіл\n'
+                                  '(180 30 20 = 180°30\'20\'\'):')
+                    measure = fn.calc_measure_having_radius_angle(radius, angle)
+                    print(f'Результат {measure} м')
 
-                radius = input('\nВведіть радіус R:')
-                angle = input('Введіть кут повороту через пробіл\n'
-                              '(180 30 20 = 180°30\'20\'\'):')
-                measure = fn.calc_measure_having_radius_angle(radius, angle)
-                print(f'Результат {measure} м')
+                except ValueError:
+                    print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')
 
             else:
-                print('ВВЕДИ ЧИСЛО!!!')
+                print('ОБЕРІТЬ ЗАДАЧУ, ВВІВШИ ЧИСЛО ВІД 1 ДО 13')
 
         elif category == '4':
             task = input('\nОбчислити:\n'
@@ -243,7 +246,7 @@ if __name__ == '__main__':
                     print(f'Результат {pressure_on_seek_floor} мм рт. ст.')
 
                 except ValueError:
-                    print('ВВЕДИ ЧИСЛО!!!')
+                    print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')
 
             elif task == '2':
                 try:
@@ -254,7 +257,10 @@ if __name__ == '__main__':
                     print(f'Результат {height_difference} м')
 
                 except ValueError:
-                    print('ВВЕДИ ЧИСЛО!!!')
+                    print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')
+
+            else:
+                print('ОБЕРІТЬ ЗАДАЧУ, ВВІВШИ ЧИСЛО ВІД 1 ДО 2')
 
         elif category == '5':
             task = input('\nОбчислити:\n'
@@ -288,7 +294,7 @@ if __name__ == '__main__':
                     print(f'Результат +-{perm_height_residual} м')
 
                 except ValueError:
-                    print('ВВЕДИ ЧИСЛО!!!')
+                    print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')
 
             elif task == '2':
                 try:
@@ -300,7 +306,7 @@ if __name__ == '__main__':
                     print(f'Результат {h2} м')
 
                 except ValueError:
-                    print('ВВЕДИ ЧИСЛО!!!')
+                    print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')
 
             elif task == '3':
                 try:
@@ -312,7 +318,7 @@ if __name__ == '__main__':
                     print(f'Результат {z_spot_degrees}°{z_spot_minutes}\'{z_spot_seconds}\'\'')
 
                 except ValueError:
-                    print('ВВЕДИ ЧИСЛО!!!')
+                    print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')
 
             elif task == '4':
                 try:
@@ -324,7 +330,7 @@ if __name__ == '__main__':
                     print(f'Результат {degrees}°{minutes}\'{seconds}\'\'')
 
                 except ValueError:
-                    print('ВВЕДИ ЧИСЛО!!!')
+                    print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')
 
             elif task == '5':
                 try:
@@ -336,7 +342,7 @@ if __name__ == '__main__':
                     print(f'Результат {degrees}°{minutes}\'{seconds}\'\'')
 
                 except ValueError:
-                    print('ВВЕДИ ЧИСЛО!!!')
+                    print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')
 
             elif task == '6':
                 try:
@@ -348,7 +354,7 @@ if __name__ == '__main__':
                     print(f'Результат {degrees}°{minutes}\'{seconds}\'\'')
 
                 except ValueError:
-                    print('ВВЕДИ ЧИСЛО!!!')
+                    print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')
 
             elif task == '7':
                 try:
@@ -362,7 +368,7 @@ if __name__ == '__main__':
                     print(f'Результат {round(h, 2)} м')
 
                 except ValueError:
-                    print('ВВЕДИ ЧИСЛО!!!')
+                    print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')
 
             elif task == '8':
                 try:
@@ -376,7 +382,7 @@ if __name__ == '__main__':
                     print(f'Результат {round(abs_lin_residual, 2)} м')
 
                 except ValueError:
-                    print('ВВЕДИ ЧИСЛО!!!')
+                    print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')
 
             elif task == '9':
                 try:
@@ -387,7 +393,7 @@ if __name__ == '__main__':
                     print(f'Результат {round(horizontal_projection, 2)} м')
 
                 except ValueError:
-                    print('ВВЕДИ ЧИСЛО!!!')
+                    print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')
 
             elif task == '10':
                 try:
@@ -398,7 +404,7 @@ if __name__ == '__main__':
                     print(f'Результат {round(horizontal_projection, 2)} м')
 
                 except ValueError:
-                    print('ВВЕДИ ЧИСЛО!!!')
+                    print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')
 
             elif task == '11':
                 try:
@@ -409,7 +415,7 @@ if __name__ == '__main__':
                     print(f'Результат {round(height_residual, 2)} м')
 
                 except ValueError:
-                    print('ВВЕДИ ЧИСЛО!!!')
+                    print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')
 
             elif task == '12':
                 try:
@@ -421,7 +427,7 @@ if __name__ == '__main__':
                     print(f'Результат {round(horizontal_projection, 2)} м')
 
                 except ValueError:
-                    print('ВВЕДИ ЧИСЛО!!!')
+                    print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')
 
             elif task == '13':
                 try:
@@ -433,7 +439,7 @@ if __name__ == '__main__':
                     print(f'Результат {angle_degrees}°{angle_minutes}\'{angle_seconds}\'\'')
 
                 except ValueError:
-                    print('ВВЕДИ ЧИСЛО!!!')
+                    print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')
 
             elif task == '14':
                 try:
@@ -445,7 +451,7 @@ if __name__ == '__main__':
                     print(f'Результат {r}')
 
                 except ValueError:
-                    print('ВВЕДИ ЧИСЛО!!!')
+                    print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')
 
             elif task == '15':
                 try:
@@ -459,7 +465,7 @@ if __name__ == '__main__':
                     print(f'Результат {round(h, 2)} м')
 
                 except ValueError:
-                    print('ВВЕДИ ЧИСЛО!!!')
+                    print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')
 
             elif task == '16':
                 try:
@@ -475,17 +481,24 @@ if __name__ == '__main__':
                     print(f'Результат 1 / {relative_residual}')
 
                 except ValueError:
-                    print('ВВЕДИ ЧИСЛО!!!')
+                    print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')
 
             elif task == '17':
-                x1 = input('\nВведіть Х початкової точки:')
-                y1 = input('Введіть Y початкової точки:')
-                xn = input('Введіть Х кінцевої точки:')
-                yn = input('Введіть Y кінцевої точки:')
-                xpr = input('Введіть практичну суму приростів ΣΔΧпр:')
-                ypr = input('Введіть практичну суму приростів ΣΔyпр:')
-                abs_lin_residual = fn.abs_lin_residual_unclosed(x1, y1, xn, yn, xpr, ypr)
-                print(f'Результат {round(abs_lin_residual, 2)} м')
+                try:
+                    x1 = input('\nВведіть Х початкової точки:')
+                    y1 = input('Введіть Y початкової точки:')
+                    xn = input('Введіть Х кінцевої точки:')
+                    yn = input('Введіть Y кінцевої точки:')
+                    xpr = input('Введіть практичну суму приростів ΣΔΧпр:')
+                    ypr = input('Введіть практичну суму приростів ΣΔyпр:')
+                    abs_lin_residual = fn.abs_lin_residual_unclosed(x1, y1, xn, yn, xpr, ypr)
+                    print(f'Результат {round(abs_lin_residual, 2)} м')
+
+                except ValueError:
+                    print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')
+
+            else:
+                print('ВИБЕРИ ЗАДАЧУ, ВВІВШИ ЧИСЛО ВІД 1 ДО 17 ')
 
         else:
-            print('ВВЕДИ ЧИСЛО!!!')
+            print('ВИБЕРИ КАТЕГОРІЮ, ВВІВШИ ЧИСЛО ВІД 1 до 5')
