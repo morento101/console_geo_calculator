@@ -37,32 +37,39 @@ def convert_grad_min_secs_to_decimal(string):
         degrees, minutes, seconds = string[0], string[1], string[2]
         degrees, minutes, seconds = coma_replace(degrees), coma_replace(minutes), coma_replace(seconds)
 
-        if int(degrees) > 0:
-            decimal_degrees = (float(degrees) + float(minutes) / 60 + float(seconds) / 3600)
+        if float(degrees) > 0:
+            decimal_degrees = (float(degrees) + (float(minutes) / 60) + (float(seconds) / 3600))
             return decimal_degrees
 
-        elif int(degrees) < 0:
-            decimal_degrees = (float(degrees) - float(minutes) / 60 - float(seconds) / 3600)
+        elif float(degrees) < 0:
+            decimal_degrees = (float(degrees) - (float(minutes) / 60) - (float(seconds) / 3600))
             return decimal_degrees
 
-        elif int(degrees) == 0:
-            decimal_degrees = 0 + float(minutes) / 60
+        elif str(degrees) == '0.0':
+            decimal_degrees = 0 + (float(minutes) / 60) + (float(seconds) / 3600)
+            return decimal_degrees
+
+        elif str(degrees) == '-0.0':
+            decimal_degrees = 0 - (float(minutes) / 60) - (float(seconds) / 3600)
             return decimal_degrees
 
     elif len(string) == 2:
         degrees, minutes = string[0], string[1]
         degrees, minutes = coma_replace(degrees), coma_replace(minutes)
-
-        if int(degrees) > 0:
-            decimal_degrees = (float(degrees) + float(minutes) / 60)
+        if float(degrees) > 0:
+            decimal_degrees = (float(degrees) + (float(minutes) / 60))
             return decimal_degrees
 
-        elif int(degrees) < 0:
-            decimal_degrees = (float(degrees) - float(minutes) / 60)
+        elif float(degrees) < 0:
+            decimal_degrees = (float(degrees) - (float(minutes) / 60))
             return decimal_degrees
 
-        elif int(degrees) == 0:
-            decimal_degrees = 0 + float(minutes) / 60
+        elif str(degrees) == '0.0':
+            decimal_degrees = 0 + (float(minutes) / 60)
+            return decimal_degrees
+
+        elif str(degrees) == '-0.0':
+            decimal_degrees = 0 - (float(minutes) / 60)
             return decimal_degrees
 
     elif len(string) == 1:
@@ -81,10 +88,21 @@ def convert_decimal_deg_to_rad(angle):
 
 
 def convert_decimal_degrees_to_degrees(angle):
-    degrees = int(angle)
-    minutes = int((angle - degrees) * 60)
-    seconds = round((angle - degrees - (minutes / 60)) * 3600)
-    return degrees, minutes, seconds
+    if angle < 0:
+        degrees = int(angle)
+        minutes = (int((angle - degrees) * 60))
+        seconds = round((angle - degrees - (minutes / 60)) * 3600)
+        return degrees, -minutes, -seconds
+
+    elif angle > 0:
+        degrees = int(angle)
+        minutes = int((angle - degrees) * 60)
+        seconds = round((angle - degrees - (minutes / 60)) * 3600)
+        return degrees, minutes, seconds
+
+    elif angle == 0:
+        degrees, minutes, seconds = 0, 0, 0
+        return degrees, minutes, seconds
 
 
 def convert_rad_to_decimal(angle):
@@ -129,8 +147,9 @@ def project_height2(h1, i, d):
 
 def calc_slope(h1, h2, d):
     h1, h2, d = coma_replace(h1), coma_replace(h2), coma_replace(d)
-    slope = ((h2 - h1) / d) * 1000
-    return round(slope)
+    slope1 = ((h2 - h1) / d)  # * 1000
+    slope2 = ((h2 - h1) / d) * 1000
+    return round(slope1, 3), round(slope2)
 
 
 def calc_tan_having_radius_bisector(r, b):
@@ -253,9 +272,7 @@ def permissible_height_residual(perimeter, n):
 
 def h2_having_h1_l_i(h1, h, i, l):
     h1, h, l, i = coma_replace(h1), coma_replace(h), coma_replace(l), coma_replace(i)
-    print(h1, h, i, l)
     h2 = h1 + h + i - l
-    print(h1, h2, h, i, l)
     return round(h2, 2)
 
 

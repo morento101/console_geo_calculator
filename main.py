@@ -102,8 +102,8 @@ if __name__ == '__main__':
                     h1 = input('\nВведіть висоту першої точи:')
                     h2 = input('Введіть висоту другої точки:')
                     d = input('Введіть відстань d:')
-                    slope = fn.calc_slope(h1, h2, d)
-                    print(f'Результат {slope} проміле')
+                    slope1, slope2 = fn.calc_slope(h1, h2, d)
+                    print(f'Результат {slope1} або {slope2} проміле')
 
                 except ValueError:
                     print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')
@@ -338,7 +338,7 @@ if __name__ == '__main__':
                                       '(180 30 20 = 180°30\'20\'\'):')
                     kl = input('Введіть відлік КЛ через пробіл\n'
                                '(180 30 20 = 180°30\'20\'\'):')
-                    degrees, minutes, seconds = fn.calc_angle_having_mo_kp(zero_spot, kl)
+                    degrees, minutes, seconds = fn.calc_angle_having_mo_kl(zero_spot, kl)
                     print(f'Результат {degrees}°{minutes}\'{seconds}\'\'')
 
                 except ValueError:
