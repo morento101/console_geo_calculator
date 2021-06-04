@@ -180,7 +180,8 @@ def calc_tan_having_angle_radius(angle, radius):
     angle, radius = convert_grad_min_secs_to_decimal(angle), coma_replace(radius)
     angle = convert_decimal_deg_to_rad(angle)
     tangent = radius * math.tan(angle / 2)
-    print('Т = R * tan(кут / 2)')
+    degrees, minutes, seconds = convert_decimal_degrees_to_degrees(angle)
+    print(f'Т = {radius} * tan({degrees}°{minutes}\'{seconds}\'\' / 2) = {round(tangent, 2)}')
     return round(tangent, 2)
 
 
@@ -188,14 +189,16 @@ def calc_bisector_having_radius_angle(radius, angle):
     angle, radius = convert_grad_min_secs_to_decimal(angle), coma_replace(radius)
     angle = convert_decimal_deg_to_rad(angle)
     bisector = radius * (calc_sec(angle / 2) - 1)
-    print('Б = R * sec(кут / 2) -1')
+    degrees, minutes, seconds = convert_decimal_degrees_to_degrees(angle)
+    print(f'Б = {radius} * sec({degrees}°{minutes}\'{seconds}\'\' / 2) - 1 = {round(bisector, 2)}')
     return round(bisector, 2)
 
 
 def angle_having_radius_tangent(radius, tangent):
     radius, tangent = coma_replace(radius), coma_replace(tangent)
     angle = 2 * math.atan(tangent / radius)
-    print('Кут = 2 * tan(Т / R')
+    degrees, minutes, seconds = convert_decimal_degrees_to_degrees(angle)
+    print(f'Кут = 2 * tan({tangent} / {radius} = {degrees}°{minutes}\'{seconds}\'\'')
     return angle
 
 
@@ -203,22 +206,23 @@ def calc_bisector_having_tangent_radius(tangent, radius):
     tangent, radius = coma_replace(tangent), coma_replace(radius)
     angle = 2 * math.atan(tangent / radius)
     bisector = radius * (calc_sec(angle / 2) - 1)
-    print('Кут = 2 * tan(Т / R')
-    print('Б = R * sec(кут / 2) -1')
+    degrees, minutes, seconds = convert_decimal_degrees_to_degrees(angle)
+    print(f'Кут = 2 * tan({tangent} / {radius} = {degrees}°{minutes}\'{seconds}\'\'')
+    print(f'Б = {radius} * sec({degrees}°{minutes}\'{seconds}\'\' / 2) - 1 = {round(bisector, 2)}')
     return round(bisector, 2)
 
 
 def distance_from_0work_by_x(h1, h2, d):
     h1, h2, d = coma_replace(h1), coma_replace(h2), coma_replace(d)
     x = (h1 * d) / (h1 + h2)
-    print('Відстань по x = (h1 * d) / (h1 + h2) ')
+    print(f'Відстань по x = ({h1} * {d}) / ({h1} + {h2}) = {round(x, 2)}')
     return round(x, 2)
 
 
 def distance_from_0work_by_y(h1, h2, d):
     h1, h2, d = coma_replace(h1), coma_replace(h2), coma_replace(d)
     y = (h2 * d) / (h1 + h2)
-    print('Відстань по y = (h2 * d) / (h1 + h2)')
+    print(f'Відстань по y = ({h2} * {d}) / ({h1} + {h2}) = {round(y, 2)}')
     return round(y, 2)
 
 
@@ -226,14 +230,15 @@ def curve_having_radius_angle(radius, angle):
     radius, angle = coma_replace(radius), convert_grad_min_secs_to_decimal(angle)
     angle = convert_decimal_deg_to_rad(angle)
     curve = radius * ((math.pi * angle) / (180 * ONE_RAD))
-    print('К = R * (pi * кут) / 180')
+    degrees, minutes, seconds = convert_decimal_degrees_to_degrees(angle)
+    print(f'К = {radius} * (pi * {degrees}°{minutes}\'{seconds}\'\') / 180° = {round(curve, 2)}')
     return round(curve, 2)
 
 
 def curve_having_tangent_measure(tangent, measure):
     tangent, measure = coma_replace(tangent), coma_replace(measure)
     curve = 2 * tangent - measure
-    print('К = 2 * Т - Д')
+    print(f'К = 2 * {tangent} - {measure} = {round(curve, 2)}')
     return round(curve, 2)
 
 
@@ -241,7 +246,8 @@ def calc_measure_having_radius_angle(radius, angle):
     radius, angle = coma_replace(radius), convert_grad_min_secs_to_decimal(angle)
     angle = convert_decimal_deg_to_rad(angle)
     measure = radius * ((2 * math.tan(angle / 2)) - ((math.pi * angle) / (180 * ONE_RAD)))
-    print('Д = R * (2 * tan(кут / 2) - (pi * кут) / 180')
+    degrees, minutes, seconds = convert_decimal_degrees_to_degrees(angle)
+    print(f'Д = {radius} * (2 * tan({degrees}°{minutes}\'{seconds}\'\' / 2) - (pi * {degrees}°{minutes}\'{seconds}\'\') / 180 = {round(measure, 2)}')
     return round(measure, 2)
 
 
@@ -258,10 +264,7 @@ def calc_pressure_on_cert_floor(known_floor, pressure_on_known_floor, seek_floor
         height_difference = floor_difference * floor_height
         barometric_difference = height_difference / barometric_degree
         pressure_on_seek_floor = pressure_on_known_floor + barometric_difference
-        print('кількість поверхів = номер поверха, де знаєм тиск - номер поверха, де шукаєм тиск'
-              'Висотна різниця = кількість поверхів * висота одного поверху'
-              'Барометрична різниця = висотна різниця / барометрична ступінь'
-              'Тиск на шуканому поверсі = тиск, на відомому поверсі + барометрична різниця')
+        # TODO: continue adding steps to tasks
 
     elif known_floor < seek_floor:
         floor_difference = seek_floor - known_floor
