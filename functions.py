@@ -433,17 +433,3 @@ def relative_residual(x1, y1, xn, yn, xpr, ypr, p):
     rel_residual = p / abs_residual
 
     return rel_residual
-
-
-def abs_lin_residual_unclosed(x1, y1, xn, yn, xpr, ypr):
-    x1, y1, xn, yn, xpr, ypr = coma_replace(x1), coma_replace(y1), coma_replace(xn), coma_replace(yn), \
-                                  coma_replace(xpr), coma_replace(ypr)
-    difference_x = xn - x1
-    difference_y = yn - y1
-    residual_x = xpr - difference_x
-    residual_y = ypr - difference_y
-
-    abs_residual = math.sqrt((residual_x ** 2) + (residual_y ** 2))
-    abs_residual = round(abs_residual, 2)
-
-    return abs_residual
