@@ -392,6 +392,8 @@ def absolute_lineal_residual_having_coords(x1, y1, xn, yn, practice_x, practice_
         f'ΣΔΧтеор = {xn} - {x1} = {theory_x}\n'
         f'ΣΔyтеор = {yn} - {y1} = {theory_y}\n'
         f'Нев\'зка по x = {practice_x} - {theory_x} = {residual_x}\n'
+        f'Нев\'зка по y = {practice_y} - {theory_y} = {residual_y}\n'
+        f'Абсолютна нев\'язка = корінь_квадр.({residual_x ** 2} + {residual_y ** 2}) = {round(abs_lin_residual, 2)}'
     )
     return abs_lin_residual
 
@@ -401,6 +403,9 @@ def horizontal_projection_string(d, v):
     v = convert_grad_min_secs_to_decimal(v)
     v = convert_decimal_deg_to_rad(v)
     horizontal_projection = d * math.cos(v)
+    print(
+        f'Гор. проєкція = {d} * cos(кут) = {horizontal_projection}'
+    )
     return horizontal_projection
 
 
@@ -409,6 +414,9 @@ def horizontal_projection_rangefinder(d, v):
     v = convert_grad_min_secs_to_decimal(v)
     v = convert_decimal_deg_to_rad(v)
     horizontal_projection = d * (math.cos(v) ** 2)
+    print(
+        f'ор. проєкція = {d} * cos(кут) ** 2 = {horizontal_projection}'
+    )
     return horizontal_projection
 
 
@@ -416,6 +424,10 @@ def height_residual(hst, hfn, pr_sum_excess):
     hst, hfn, pr_sum_excess = coma_replace(hst), coma_replace(hfn), coma_replace(pr_sum_excess)
     te_sum_excess = hfn - hst
     residual = pr_sum_excess - te_sum_excess
+    print(
+        f'Теор. сума перевищень = {hfn} - {hst} = {te_sum_excess}'
+        f'Вис. нев\'язка = {pr_sum_excess} - {te_sum_excess} = {residual}'
+    )
     return residual
 
 
@@ -424,6 +436,11 @@ def hor_proj_having_coords(x1, y1, xn, yn):
     difference_x = xn - x1
     difference_y = yn - y1
     horizontal_projection = math.sqrt(difference_x ** 2 + difference_y ** 2)
+    print(
+        f'Прирости x = {xn} - {x1} = {difference_x}'
+        f'Прирости y = {yn} - {y1} = {difference_y}'
+        f'Гор. проєкція = кор.квадр({difference_x ** 2} + {difference_y ** 2}) = {horizontal_projection})'
+    )
     return horizontal_projection
 
 
@@ -488,6 +505,9 @@ def excess_having_d_v_i_l(d, v, i, l):
     v = convert_grad_min_secs_to_decimal(v)
     v = convert_decimal_deg_to_rad(v)
     h = d * math.tan(v) + i - l
+    print(
+        f'Перевищення = {d} * tan(кут) + {i} - {l} = {h}'
+    )
     return h
 
 
@@ -503,5 +523,14 @@ def relative_residual(x1, y1, xn, yn, xpr, ypr, p):
     abs_residual = math.sqrt((residual_x ** 2) + (residual_y ** 2))
     abs_residual = round(abs_residual, 2)
     rel_residual = p / abs_residual
+
+    print(
+        f'Теор сума x = {xn} - {x1} = {difference_x}\n'
+        f'Теор сума y = {yn} - {y1} = {difference_y}\n'
+        f'Нев\'язка x = {xpr} - {difference_x} = {residual_x}\n'
+        f'Нев\'язка y = {ypr} - {difference_y} = {residual_y}\n'
+        f'Абс. нев. = корінь_квдр({residual_x ** 2} + {residual_y ** 2} = {round(abs_residual, 2)}\n'
+        f'Відносна нев\'зка = 1 / ({p} / {abs_residual}) = 1 / {rel_residual}'
+    )
 
     return rel_residual
