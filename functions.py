@@ -264,14 +264,24 @@ def calc_pressure_on_cert_floor(known_floor, pressure_on_known_floor, seek_floor
         height_difference = floor_difference * floor_height
         barometric_difference = height_difference / barometric_degree
         pressure_on_seek_floor = pressure_on_known_floor + barometric_difference
-        # TODO: continue adding steps to tasks
+        print(
+            f'Різниця поверхів = {known_floor} - {seek_floor} = {floor_difference}\n'
+            f'Висотна різниця = {floor_difference} * {floor_height} = {height_difference}\n'
+            f'Барометрична різниця = {height_difference} / {barometric_difference} = {round(barometric_difference, 2)}\n'
+            f'Тиск на шуканому поверсі = {pressure_on_known_floor} + {round(barometric_difference, 2)} = {pressure_on_seek_floor}'
+        )
 
     elif known_floor < seek_floor:
         floor_difference = seek_floor - known_floor
         height_difference = floor_difference * floor_height
         barometric_difference = height_difference / barometric_degree
         pressure_on_seek_floor = pressure_on_known_floor - barometric_difference
-
+        print(
+            f'Різниця поверхів = {known_floor} - {seek_floor} = {floor_difference}\n'
+            f'Висотна різниця = {floor_difference} * {floor_height} = {height_difference}\n'
+            f'Барометрична різниця = {height_difference} / {barometric_difference} = {round(barometric_difference, 2)}\n'
+            f'Тиск на шуканому поверсі = {pressure_on_known_floor} + {round(barometric_difference, 2)} = {pressure_on_seek_floor}'
+              )
     return round(pressure_on_seek_floor, 2)
 
 
@@ -284,10 +294,18 @@ def calc_height_of_building(pressure_floor1, pressure_floor2, barometric_degree=
     if pressure_floor1 > pressure_floor2:
         pressure_difference = pressure_floor1 - pressure_floor2
         height_difference = pressure_difference * barometric_degree
+        print(
+            f'Барометрична різниця = {pressure_floor1} - {pressure_floor2} = {pressure_difference}'
+            f'Висотна різниця = {pressure_difference} * {barometric_degree} = {round(height_difference, 2)}'
+        )
 
     elif pressure_floor1 < pressure_floor2:
         pressure_difference = pressure_floor2 - pressure_floor1
         height_difference = pressure_difference * barometric_degree
+        print(
+            f'Барометрична різниця = {pressure_floor2} - {pressure_floor1} = {pressure_difference}'
+            f'Висотна різниця = {pressure_difference} * {barometric_degree} = {round(height_difference, 2)}'
+        )
 
     return round(height_difference, 2)
 
@@ -295,18 +313,27 @@ def calc_height_of_building(pressure_floor1, pressure_floor2, barometric_degree=
 def permissible_height_residual(perimeter, n):
     perimeter, n = coma_replace(perimeter), coma_replace(n)
     perm_height_res = (0.04 * perimeter) / math.sqrt(n)
+    print(
+        f'Доп. вис. нев\'язка = (0.04 * {perimeter}) / квдр.кор.({n}) = {round(perm_height_res, 2)}'
+    )
     return perm_height_res
 
 
 def h2_having_h1_l_i(h1, h, i, l):
     h1, h, l, i = coma_replace(h1), coma_replace(h), coma_replace(l), coma_replace(i)
     h2 = h1 + h + i - l
+    print(
+        f'Вис. 2 точки = {h1} + {h} + {i} - {l} = {round(h2, 2)}'
+    )
     return round(h2, 2)
 
 
 def calc_zero_spot(kp, kl):
     kp, kl = convert_grad_min_secs_to_decimal(kp), convert_grad_min_secs_to_decimal(kl)
     z_spot = (kp + kl) / 2
+    print(
+        f'(КП + КЛ) / 2 = МО'
+    )
     z_spot_degrees, z_spot_minutes, z_spot_seconds = convert_decimal_degrees_to_degrees(z_spot)
     return z_spot_degrees, z_spot_minutes, z_spot_seconds
 
@@ -314,6 +341,9 @@ def calc_zero_spot(kp, kl):
 def calc_angle_having_mo_kp(zero_spot, kp):
     zero_spot, kp = convert_grad_min_secs_to_decimal(zero_spot), convert_grad_min_secs_to_decimal(kp)
     angle = (zero_spot - kp)
+    print(
+        'Кут падіння = МО - КП'
+    )
     angle_degrees, angle_minutes, angle_seconds = convert_decimal_degrees_to_degrees(angle)
     return angle_degrees, angle_minutes, angle_seconds
 
@@ -321,6 +351,9 @@ def calc_angle_having_mo_kp(zero_spot, kp):
 def calc_angle_having_mo_kl(zero_spot, kl):
     zero_spot, kl = convert_grad_min_secs_to_decimal(zero_spot), convert_grad_min_secs_to_decimal(kl)
     angle = kl - zero_spot
+    print(
+        'Кут падіння = КЛ - МО'
+    )
     angle_degrees, angle_minutes, angle_seconds = convert_decimal_degrees_to_degrees(angle)
     return angle_degrees, angle_minutes, angle_seconds
 
@@ -328,6 +361,9 @@ def calc_angle_having_mo_kl(zero_spot, kl):
 def angle_having_kl_kp(kl, kp):
     kl, kp = convert_grad_min_secs_to_decimal(kl), convert_grad_min_secs_to_decimal(kp)
     angle = (kl - kp) / 2
+    print(
+        'Кут падіння = (КЛ - КП) / 2'
+    )
     angle_degrees, angle_minutes, angle_seconds = convert_decimal_degrees_to_degrees(angle)
     return angle_degrees, angle_minutes, angle_seconds
 
@@ -338,6 +374,9 @@ def h_having_d_v_i_l(d, v, i, l):
     v = convert_decimal_deg_to_rad(v)
     d = d * (math.cos(v) ** 2)
     h = d * math.tan(v) + i - l
+    print(
+        f'Гор. проекція = {d} * cos(кут) ** 2'
+    )
     return h
 
 
@@ -349,6 +388,11 @@ def absolute_lineal_residual_having_coords(x1, y1, xn, yn, practice_x, practice_
     residual_x = practice_x - theory_x
     residual_y = practice_y - theory_y
     abs_lin_residual = math.sqrt(residual_x ** 2 + residual_y ** 2)
+    print(
+        f'ΣΔΧтеор = {xn} - {x1} = {theory_x}\n'
+        f'ΣΔyтеор = {yn} - {y1} = {theory_y}\n'
+        f'Нев\'зка по x = {practice_x} - {theory_x} = {residual_x}\n'
+    )
     return abs_lin_residual
 
 
