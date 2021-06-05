@@ -453,22 +453,37 @@ def directory_angle(x1, y1, xn, yn):
     tan_r = difference_y / difference_x
     r = math.atan(tan_r)
     r = convert_rad_to_decimal(r)
+    r = convert_rad_to_decimal(r)
+    r_degrees, r_minutes, r_seconds = convert_decimal_degrees_to_degrees(r)
 
-    dir_angle = 0
+    print(
+        f'Теор. сума x = {xn} - {x1} = {difference_x}'
+        f'Теор. сума y = {yn} - {y1} = {difference_y}'
+        f'tan(r) = {difference_y} / {difference_x} = {tan_r}'
+        f'r = atan({tan_r}) = {r_degrees}°{r_minutes}\'{r_seconds}\'\''
+    )
+
+    angle_degrees, angle_minutes, angle_seconds = 0, 0, 0
 
     if difference_x > 0 and difference_y > 0:
         dir_angle = r
+        angle_degrees, angle_minutes, angle_seconds = convert_decimal_degrees_to_degrees(dir_angle)
+        print(f'Дирекційний = r = {r_degrees}°{r_minutes}\'{r_seconds}\'\'')
 
     elif difference_x < 0 and difference_y > 0:
         dir_angle = 180 - r
+        angle_degrees, angle_minutes, angle_seconds = convert_decimal_degrees_to_degrees(dir_angle)
+        print(f'Дирекційний = 180° - {r_degrees}°{r_minutes}\'{r_seconds}\'\' = {angle_degrees}°{angle_minutes}\'{angle_seconds}\'\'')
 
     elif difference_x < 0 and difference_y < 0:
         dir_angle = 180 + r
+        angle_degrees, angle_minutes, angle_seconds = convert_decimal_degrees_to_degrees(dir_angle)
+        print(f'Дирекційний = 180° + {r_degrees}°{r_minutes}\'{r_seconds}\'\' = {angle_degrees}°{angle_minutes}\'{angle_seconds}\'\'')
 
     elif difference_x > 0 and difference_y < 0:
-        dir_angle = (2 * 180) - r
-
-    angle_degrees, angle_minutes, angle_seconds = convert_decimal_degrees_to_degrees(dir_angle)
+        dir_angle = 360 - r
+        angle_degrees, angle_minutes, angle_seconds = convert_decimal_degrees_to_degrees(dir_angle)
+        print(f'Дирекційний = 360° - {r_degrees}°{r_minutes}\'{r_seconds}\'\' = {angle_degrees}°{angle_minutes}\'{angle_seconds}\'\'')
 
     return angle_degrees, angle_minutes, angle_seconds
 
@@ -496,6 +511,13 @@ def rumb_having_coords(x1, y1, xn, yn):
 
     elif difference_x > 0 and difference_y < 0:
         r = f'Пн.Зх {angle_degrees}°{angle_minutes}\'{angle_seconds}\'\''
+
+    print(
+        f'Теор. сума x = {xn} - {x1} = {difference_x}'
+        f'Теор. сума y = {yn} - {y1} = {difference_y}'
+        f'tan(r) = {difference_y} / {difference_x} = {tan_r}'
+        f'r = atan({tan_r}) = {angle_degrees}°{angle_minutes}\'{angle_seconds}\'\''
+    )
 
     return r
 
