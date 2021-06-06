@@ -223,7 +223,7 @@ if __name__ == '__main__':
                     try:
                         radius = input('\nВведіть радіус R:')
                         tangent = input('Введіть тангенс Т:')
-                        angle = fn.angle_having_radius_tangent(radius, tangent) / fn.ONE_RAD
+                        angle = fn.angle_having_radius_tangent(radius, tangent)
                         degrees, minutes, seconds = fn.convert_decimal_degrees_to_degrees(angle)
                         print(f'Результат {degrees}°{minutes}\'{seconds}\'\'')
 
@@ -246,7 +246,7 @@ if __name__ == '__main__':
 
             elif category == '4':
                 task = input('\nОбчислити:\n'
-                             '\n1. Тиск  на певному  поверсі, знаючи висоту поверха, бар. ступ. \n'
+                             '\n1. Тиск  на певному  поверсі, знаючи тиск іншого поверха, висоту поверха, бар. ступ.\n'
                              '2. Висоту будівлі, знаючи тиск у двох точках та бар. ступ.\n'
                              '-->')
 
@@ -305,7 +305,7 @@ if __name__ == '__main__':
                         perimeter = input('\nВведіть периметр:')
                         n = input('Введіть к-сть перевищень:')
                         perm_height_residual = fn.permissible_height_residual(perimeter, n)
-                        print(f'Результат +-{perm_height_residual} м')
+                        print(f'Результат +-{perm_height_residual} см')
 
                     except ValueError:
                         print('НЕ ПРАВИЛЬНИЙ ФОРМАТ ВВЕДЕННИХ ДАНИХ')

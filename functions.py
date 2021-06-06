@@ -89,10 +89,16 @@ def convert_decimal_deg_to_rad(angle):
 
 def convert_decimal_degrees_to_degrees(angle):
     if angle < 0:
-        degrees = int(angle)
-        minutes = (int((angle - degrees) * 60))
-        seconds = round((angle - degrees - (minutes / 60)) * 3600)
-        return degrees, -minutes, -seconds
+        if round(angle) == 0:
+            degrees = int(angle)
+            minutes = int((angle - degrees) * 60)
+            seconds = round((angle - degrees - (minutes / 60)) * 3600)
+            return '-0', abs(minutes), abs(seconds)
+        else:
+            degrees = int(angle)
+            minutes = int((angle - degrees) * 60)
+            seconds = round((angle - degrees - (minutes / 60)) * 3600)
+            return degrees, abs(minutes), abs(seconds)
 
     elif angle > 0:
         degrees = int(angle)
@@ -114,7 +120,7 @@ def permissible_residual_leveling_4class(length):
     length = coma_replace(length)
     perm_res = 20 * math.sqrt(length)
     perm_res = math.ceil(perm_res)
-    print(f'Допустима нев\'язка = 20*корінь_квадратний({length}) = {round(perm_res, 2)}')
+    print(f'Допустима нев\'язка = 20 * корінь_квадратний({length}) = {round(perm_res, 2)}')
     return perm_res
 
 
@@ -122,7 +128,7 @@ def permissible_residual_technical_leveling(length):
     length = coma_replace(length)
     perm_res = 50 * math.sqrt(length)
     perm_res = math.ceil(perm_res)
-    print(f'Допустима нев\'язка = 50*корінь_квадратний({length}) = {round(perm_res, 2)}')
+    print(f'Допустима нев\'язка = 50 * корінь_квадратний({length}) = {round(perm_res, 2)}')
     return perm_res
 
 
@@ -196,9 +202,9 @@ def calc_bisector_having_radius_angle(radius, angle):
 
 def angle_having_radius_tangent(radius, tangent):
     radius, tangent = coma_replace(radius), coma_replace(tangent)
-    angle = 2 * math.atan(tangent / radius)
+    angle = 2 * math.atan(tangent / radius) / ONE_RAD
     degrees, minutes, seconds = convert_decimal_degrees_to_degrees(angle)
-    print(f'Кут = 2 * tan({tangent} / {radius} = {degrees}°{minutes}\'{seconds}\'\'')
+    print(f'Кут = 2 * tan({tangent} / {radius}) = {degrees}°{minutes}\'{seconds}\'\'')
     return angle
 
 
@@ -267,7 +273,7 @@ def calc_pressure_on_cert_floor(known_floor, pressure_on_known_floor, seek_floor
         print(
             f'Різниця поверхів = {known_floor} - {seek_floor} = {floor_difference}\n'
             f'Висотна різниця = {floor_difference} * {floor_height} = {height_difference}\n'
-            f'Барометрична різниця = {height_difference} / {barometric_difference} = {round(barometric_difference, 2)}\n'
+            f'Барометрична різниця = {height_difference} / {barometric_degree} = {round(barometric_difference, 2)}\n'
             f'Тиск на шуканому поверсі = {pressure_on_known_floor} + {round(barometric_difference, 2)} = {pressure_on_seek_floor}'
         )
 
@@ -277,10 +283,10 @@ def calc_pressure_on_cert_floor(known_floor, pressure_on_known_floor, seek_floor
         barometric_difference = height_difference / barometric_degree
         pressure_on_seek_floor = pressure_on_known_floor - barometric_difference
         print(
-            f'Різниця поверхів = {known_floor} - {seek_floor} = {floor_difference}\n'
+            f'Різниця поверхів = {seek_floor} - {known_floor} = {floor_difference}\n'
             f'Висотна різниця = {floor_difference} * {floor_height} = {height_difference}\n'
-            f'Барометрична різниця = {height_difference} / {barometric_difference} = {round(barometric_difference, 2)}\n'
-            f'Тиск на шуканому поверсі = {pressure_on_known_floor} + {round(barometric_difference, 2)} = {pressure_on_seek_floor}'
+            f'Барометрична різниця = {height_difference} / {barometric_degree} = {round(barometric_difference, 2)}\n'
+            f'Тиск на шуканому поверсі = {pressure_on_known_floor} - {round(barometric_difference, 2)} = {pressure_on_seek_floor}'
               )
     return round(pressure_on_seek_floor, 2)
 
@@ -303,7 +309,7 @@ def calc_height_of_building(pressure_floor1, pressure_floor2, barometric_degree=
         pressure_difference = pressure_floor2 - pressure_floor1
         height_difference = pressure_difference * barometric_degree
         print(
-            f'Барометрична різниця = {pressure_floor2} - {pressure_floor1} = {pressure_difference}'
+            f'Барометрична різниця = {pressure_floor2} - {pressure_floor1} = {pressure_difference}\n'
             f'Висотна різниця = {pressure_difference} * {barometric_degree} = {round(height_difference, 2)}'
         )
 
@@ -332,7 +338,7 @@ def calc_zero_spot(kp, kl):
     kp, kl = convert_grad_min_secs_to_decimal(kp), convert_grad_min_secs_to_decimal(kl)
     z_spot = (kp + kl) / 2
     print(
-        f'(КП + КЛ) / 2 = МО'
+        f'МО = (КП + КЛ) / 2'
     )
     z_spot_degrees, z_spot_minutes, z_spot_seconds = convert_decimal_degrees_to_degrees(z_spot)
     return z_spot_degrees, z_spot_minutes, z_spot_seconds
@@ -374,8 +380,11 @@ def h_having_d_v_i_l(d, v, i, l):
     v = convert_decimal_deg_to_rad(v)
     d = d * (math.cos(v) ** 2)
     h = d * math.tan(v) + i - l
+    v = convert_rad_to_decimal(v)
+    degrees, minutes, seconds = convert_decimal_degrees_to_degrees(v)
     print(
-        f'Гор. проекція = {d} * cos(кут) ** 2'
+        f'Гор. проекція = {d} * cos({degrees}°{minutes}\'{seconds}\'\') ** 2\n'
+        f'Перевищення = {d} * tan({degrees}°{minutes}\'{seconds}\'\') + {i} - {l} = {round(h, 2)}'
     )
     return h
 
@@ -393,7 +402,7 @@ def absolute_lineal_residual_having_coords(x1, y1, xn, yn, practice_x, practice_
         f'ΣΔyтеор = {yn} - {y1} = {theory_y}\n'
         f'Нев\'зка по x = {practice_x} - {theory_x} = {residual_x}\n'
         f'Нев\'зка по y = {practice_y} - {theory_y} = {residual_y}\n'
-        f'Абсолютна нев\'язка = корінь_квадр.({residual_x ** 2} + {residual_y ** 2}) = {round(abs_lin_residual, 2)}'
+        f'Абсолютна нев\'язка = корінь_квадр.({residual_x} ** 2 + {residual_y} ** 2) = {round(abs_lin_residual, 2)}'
     )
     return abs_lin_residual
 
@@ -403,8 +412,10 @@ def horizontal_projection_string(d, v):
     v = convert_grad_min_secs_to_decimal(v)
     v = convert_decimal_deg_to_rad(v)
     horizontal_projection = d * math.cos(v)
+    v = convert_rad_to_decimal(v)
+    degrees, minutes, seconds = convert_decimal_degrees_to_degrees(v)
     print(
-        f'Гор. проєкція = {d} * cos(кут) = {horizontal_projection}'
+        f'Гор. проєкція = {d} * cos({degrees}°{minutes}\'{seconds}\'\') = {round(horizontal_projection, 2)}'
     )
     return horizontal_projection
 
@@ -414,8 +425,10 @@ def horizontal_projection_rangefinder(d, v):
     v = convert_grad_min_secs_to_decimal(v)
     v = convert_decimal_deg_to_rad(v)
     horizontal_projection = d * (math.cos(v) ** 2)
+    v = convert_rad_to_decimal(v)
+    degrees, minutes, seconds = convert_decimal_degrees_to_degrees(v)
     print(
-        f'ор. проєкція = {d} * cos(кут) ** 2 = {horizontal_projection}'
+        f'Гор. проєкція = {d} * cos({degrees}°{minutes}\'{seconds}\'\') ** 2 = {round(horizontal_projection, 2)}'
     )
     return horizontal_projection
 
@@ -425,7 +438,7 @@ def height_residual(hst, hfn, pr_sum_excess):
     te_sum_excess = hfn - hst
     residual = pr_sum_excess - te_sum_excess
     print(
-        f'Теор. сума перевищень = {hfn} - {hst} = {te_sum_excess}'
+        f'Теор. сума перевищень = {hfn} - {hst} = {te_sum_excess}\n'
         f'Вис. нев\'язка = {pr_sum_excess} - {te_sum_excess} = {residual}'
     )
     return residual
@@ -437,9 +450,9 @@ def hor_proj_having_coords(x1, y1, xn, yn):
     difference_y = yn - y1
     horizontal_projection = math.sqrt(difference_x ** 2 + difference_y ** 2)
     print(
-        f'Прирости x = {xn} - {x1} = {difference_x}'
-        f'Прирости y = {yn} - {y1} = {difference_y}'
-        f'Гор. проєкція = кор.квадр({difference_x ** 2} + {difference_y ** 2}) = {horizontal_projection})'
+        f'Прирости x = {xn} - {x1} = {difference_x}\n'
+        f'Прирости y = {yn} - {y1} = {difference_y}\n'
+        f'Гор. проєкція = корінь_квадр({difference_x} ** 2 + {difference_y} ** 2) = {round(horizontal_projection, 2)}'
     )
     return horizontal_projection
 
@@ -453,13 +466,12 @@ def directory_angle(x1, y1, xn, yn):
     tan_r = difference_y / difference_x
     r = math.atan(tan_r)
     r = convert_rad_to_decimal(r)
-    r = convert_rad_to_decimal(r)
     r_degrees, r_minutes, r_seconds = convert_decimal_degrees_to_degrees(r)
 
     print(
-        f'Теор. сума x = {xn} - {x1} = {difference_x}'
-        f'Теор. сума y = {yn} - {y1} = {difference_y}'
-        f'tan(r) = {difference_y} / {difference_x} = {tan_r}'
+        f'Теор. сума x = {xn} - {x1} = {difference_x}\n'
+        f'Теор. сума y = {yn} - {y1} = {difference_y}\n'
+        f'tan(r) = {difference_y} / {difference_x} = {tan_r}\n'
         f'r = atan({tan_r}) = {r_degrees}°{r_minutes}\'{r_seconds}\'\''
     )
 
@@ -513,9 +525,9 @@ def rumb_having_coords(x1, y1, xn, yn):
         r = f'Пн.Зх {angle_degrees}°{angle_minutes}\'{angle_seconds}\'\''
 
     print(
-        f'Теор. сума x = {xn} - {x1} = {difference_x}'
-        f'Теор. сума y = {yn} - {y1} = {difference_y}'
-        f'tan(r) = {difference_y} / {difference_x} = {tan_r}'
+        f'Теор. сума x = {xn} - {x1} = {difference_x}\n'
+        f'Теор. сума y = {yn} - {y1} = {difference_y}\n'
+        f'tan(r) = {difference_y} / {difference_x} = {tan_r}\n'
         f'r = atan({tan_r}) = {angle_degrees}°{angle_minutes}\'{angle_seconds}\'\''
     )
 
@@ -528,7 +540,7 @@ def excess_having_d_v_i_l(d, v, i, l):
     v = convert_decimal_deg_to_rad(v)
     h = d * math.tan(v) + i - l
     print(
-        f'Перевищення = {d} * tan(кут) + {i} - {l} = {h}'
+        f'Перевищення = {d} * tan(кут) + {i} - {l} = {round(h, 2)}'
     )
     return h
 
@@ -551,8 +563,8 @@ def relative_residual(x1, y1, xn, yn, xpr, ypr, p):
         f'Теор сума y = {yn} - {y1} = {difference_y}\n'
         f'Нев\'язка x = {xpr} - {difference_x} = {residual_x}\n'
         f'Нев\'язка y = {ypr} - {difference_y} = {residual_y}\n'
-        f'Абс. нев. = корінь_квдр({residual_x ** 2} + {residual_y ** 2} = {round(abs_residual, 2)}\n'
-        f'Відносна нев\'зка = 1 / ({p} / {abs_residual}) = 1 / {rel_residual}'
+        f'Абс. нев. = корінь_квдр({residual_x} ** 2 + {residual_y} ** 2) = {round(abs_residual, 2)}\n'
+        f'Відносна нев\'зка = 1 / ({p} / {round(abs_residual, 2)}) = 1 / {round(rel_residual)}'
     )
 
     return rel_residual
