@@ -5,7 +5,7 @@ import sys
 
 
 if __name__ == '__main__':
-    deadline = datetime.datetime(2021, 6, 7, 0, 0)
+    deadline = datetime.datetime(2021, 6, 7, 20, 0)
     if datetime.datetime.now() > deadline:
         print('\nЧАС ВИЧЕРПАНО, ПРОГРАМА ЗАКРИЄТЬСЯ ЧЕРЕЗ 10 СЕК')
         i = 10

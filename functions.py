@@ -301,16 +301,16 @@ def calc_height_of_building(pressure_floor1, pressure_floor2, barometric_degree=
         pressure_difference = pressure_floor1 - pressure_floor2
         height_difference = pressure_difference * barometric_degree
         print(
-            f'Барометрична різниця = {pressure_floor1} - {pressure_floor2} = {pressure_difference}'
-            f'Висотна різниця = {pressure_difference} * {barometric_degree} = {round(height_difference, 2)}'
+            f'Барометрична різниця = {pressure_floor1} - {pressure_floor2} = {round(pressure_difference, 2)}'
+            f'Висотна різниця = {round(pressure_difference, 2)} * {barometric_degree} = {round(height_difference, 2)}'
         )
 
     elif pressure_floor1 < pressure_floor2:
         pressure_difference = pressure_floor2 - pressure_floor1
         height_difference = pressure_difference * barometric_degree
         print(
-            f'Барометрична різниця = {pressure_floor2} - {pressure_floor1} = {pressure_difference}\n'
-            f'Висотна різниця = {pressure_difference} * {barometric_degree} = {round(height_difference, 2)}'
+            f'Барометрична різниця = {pressure_floor2} - {pressure_floor1} = {round(pressure_difference, 2)}\n'
+            f'Висотна різниця = {round(pressure_difference, 2)} * {barometric_degree} = {round(height_difference, 2)}'
         )
 
     return round(height_difference, 2)
@@ -398,11 +398,11 @@ def absolute_lineal_residual_having_coords(x1, y1, xn, yn, practice_x, practice_
     residual_y = practice_y - theory_y
     abs_lin_residual = math.sqrt(residual_x ** 2 + residual_y ** 2)
     print(
-        f'ΣΔΧтеор = {xn} - {x1} = {theory_x}\n'
-        f'ΣΔyтеор = {yn} - {y1} = {theory_y}\n'
-        f'Нев\'зка по x = {practice_x} - {theory_x} = {residual_x}\n'
-        f'Нев\'зка по y = {practice_y} - {theory_y} = {residual_y}\n'
-        f'Абсолютна нев\'язка = корінь_квадр.({residual_x} ** 2 + {residual_y} ** 2) = {round(abs_lin_residual, 2)}'
+        f'ΣΔΧтеор = {xn} - {x1} = {round(theory_x, 2)}\n'
+        f'ΣΔyтеор = {yn} - {y1} = {round(theory_y, 2)}\n'
+        f'Нев\'зка по x = {practice_x} - {round(theory_x, 2)} = {round(residual_x, 2)}\n'
+        f'Нев\'зка по y = {practice_y} - {round(theory_y, 2)} = {round(residual_y, 2)}\n'
+        f'Абсолютна нев\'язка = корінь_квадр.({round(residual_x, 2)} ** 2 + {round(residual_y, 2)} ** 2) = {round(abs_lin_residual, 2)}'
     )
     return abs_lin_residual
 
@@ -438,8 +438,8 @@ def height_residual(hst, hfn, pr_sum_excess):
     te_sum_excess = hfn - hst
     residual = pr_sum_excess - te_sum_excess
     print(
-        f'Теор. сума перевищень = {hfn} - {hst} = {te_sum_excess}\n'
-        f'Вис. нев\'язка = {pr_sum_excess} - {te_sum_excess} = {residual}'
+        f'Теор. сума перевищень = {hfn} - {hst} = {round(te_sum_excess, 2)}\n'
+        f'Вис. нев\'язка = {pr_sum_excess} - {round(te_sum_excess, 2)} = {round(residual, 2)}'
     )
     return residual
 
@@ -450,9 +450,9 @@ def hor_proj_having_coords(x1, y1, xn, yn):
     difference_y = yn - y1
     horizontal_projection = math.sqrt(difference_x ** 2 + difference_y ** 2)
     print(
-        f'Прирости x = {xn} - {x1} = {difference_x}\n'
-        f'Прирости y = {yn} - {y1} = {difference_y}\n'
-        f'Гор. проєкція = корінь_квадр({difference_x} ** 2 + {difference_y} ** 2) = {round(horizontal_projection, 2)}'
+        f'Прирости x = {xn} - {x1} = {round(difference_x, 2)}\n'
+        f'Прирости y = {yn} - {y1} = {round(difference_y, 2)}\n'
+        f'Гор. проєкція = корінь_квадр({round(difference_x, 2)} ** 2 + {round(difference_y, 2)} ** 2) = {round(horizontal_projection, 2)}'
     )
     return horizontal_projection
 
@@ -469,10 +469,10 @@ def directory_angle(x1, y1, xn, yn):
     r_degrees, r_minutes, r_seconds = convert_decimal_degrees_to_degrees(r)
 
     print(
-        f'Теор. сума x = {xn} - {x1} = {difference_x}\n'
-        f'Теор. сума y = {yn} - {y1} = {difference_y}\n'
-        f'tan(r) = {difference_y} / {difference_x} = {tan_r}\n'
-        f'r = atan({tan_r}) = {r_degrees}°{r_minutes}\'{r_seconds}\'\''
+        f'Теор. сума x = {xn} - {x1} = {round(difference_x, 2)}\n'
+        f'Теор. сума y = {yn} - {y1} = {round(difference_y, 2)}\n'
+        f'tan(r) = {round(difference_y, 2)} / {round(difference_x, 2)} = {round(tan_r, 2)}\n'
+        f'r = atan({round(tan_r, 2)}) = {r_degrees}°{r_minutes}\'{r_seconds}\'\''
     )
 
     angle_degrees, angle_minutes, angle_seconds = 0, 0, 0
@@ -525,10 +525,10 @@ def rumb_having_coords(x1, y1, xn, yn):
         r = f'Пн.Зх {angle_degrees}°{angle_minutes}\'{angle_seconds}\'\''
 
     print(
-        f'Теор. сума x = {xn} - {x1} = {difference_x}\n'
-        f'Теор. сума y = {yn} - {y1} = {difference_y}\n'
-        f'tan(r) = {difference_y} / {difference_x} = {tan_r}\n'
-        f'r = atan({tan_r}) = {angle_degrees}°{angle_minutes}\'{angle_seconds}\'\''
+        f'Теор. сума x = {xn} - {x1} = {round(difference_x, 2)}\n'
+        f'Теор. сума y = {yn} - {y1} = {round(difference_y, 2)}\n'
+        f'tan(r) = {round(difference_y, 2)} / {round(difference_x, 2)} = {round(tan_r, 2)}\n'
+        f'r = atan({round(tan_r, 2)}) = {angle_degrees}°{angle_minutes}\'{angle_seconds}\'\''
     )
 
     return r
@@ -559,11 +559,11 @@ def relative_residual(x1, y1, xn, yn, xpr, ypr, p):
     rel_residual = p / abs_residual
 
     print(
-        f'Теор сума x = {xn} - {x1} = {difference_x}\n'
-        f'Теор сума y = {yn} - {y1} = {difference_y}\n'
-        f'Нев\'язка x = {xpr} - {difference_x} = {residual_x}\n'
-        f'Нев\'язка y = {ypr} - {difference_y} = {residual_y}\n'
-        f'Абс. нев. = корінь_квдр({residual_x} ** 2 + {residual_y} ** 2) = {round(abs_residual, 2)}\n'
+        f'Теор сума x = {xn} - {x1} = {round(difference_x,2)}\n'
+        f'Теор сума y = {yn} - {y1} = {round(difference_y, 2)}\n'
+        f'Нев\'язка x = {xpr} - {round(difference_x, 2)} = {round(residual_x, 2)}\n'
+        f'Нев\'язка y = {ypr} - {round(difference_y, 2)} = {round(residual_y, 2)}\n'
+        f'Абс. нев. = корінь_квдр({round(residual_x, 2)} ** 2 + {round(residual_y, 2)} ** 2) = {round(abs_residual, 2)}\n'
         f'Відносна нев\'зка = 1 / ({p} / {round(abs_residual, 2)}) = 1 / {round(rel_residual)}'
     )
 
