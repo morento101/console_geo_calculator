@@ -1,6 +1,5 @@
 import math
 
-
 ONE_RAD = 0.01745329252
 
 
@@ -253,7 +252,8 @@ def calc_measure_having_radius_angle(radius, angle):
     angle = convert_decimal_deg_to_rad(angle)
     measure = radius * ((2 * math.tan(angle / 2)) - ((math.pi * angle) / (180 * ONE_RAD)))
     degrees, minutes, seconds = convert_decimal_degrees_to_degrees(angle)
-    print(f'Д = {radius} * (2 * tan({degrees}°{minutes}\'{seconds}\'\' / 2) - (pi * {degrees}°{minutes}\'{seconds}\'\') / 180 = {round(measure, 2)}')
+    print(
+        f'Д = {radius} * (2 * tan({degrees}°{minutes}\'{seconds}\'\' / 2) - (pi * {degrees}°{minutes}\'{seconds}\'\') / 180 = {round(measure, 2)}')
     return round(measure, 2)
 
 
@@ -287,7 +287,7 @@ def calc_pressure_on_cert_floor(known_floor, pressure_on_known_floor, seek_floor
             f'Висотна різниця = {floor_difference} * {floor_height} = {height_difference}\n'
             f'Барометрична різниця = {height_difference} / {barometric_degree} = {round(barometric_difference, 2)}\n'
             f'Тиск на шуканому поверсі = {pressure_on_known_floor} - {round(barometric_difference, 2)} = {pressure_on_seek_floor}'
-              )
+        )
     return round(pressure_on_seek_floor, 2)
 
 
@@ -485,17 +485,20 @@ def directory_angle(x1, y1, xn, yn):
     elif difference_x < 0 and difference_y > 0:
         dir_angle = 180 - r
         angle_degrees, angle_minutes, angle_seconds = convert_decimal_degrees_to_degrees(dir_angle)
-        print(f'Дирекційний = 180° - {r_degrees}°{r_minutes}\'{r_seconds}\'\' = {angle_degrees}°{angle_minutes}\'{angle_seconds}\'\'')
+        print(
+            f'Дирекційний = 180° - {r_degrees}°{r_minutes}\'{r_seconds}\'\' = {angle_degrees}°{angle_minutes}\'{angle_seconds}\'\'')
 
     elif difference_x < 0 and difference_y < 0:
         dir_angle = 180 + r
         angle_degrees, angle_minutes, angle_seconds = convert_decimal_degrees_to_degrees(dir_angle)
-        print(f'Дирекційний = 180° + {r_degrees}°{r_minutes}\'{r_seconds}\'\' = {angle_degrees}°{angle_minutes}\'{angle_seconds}\'\'')
+        print(
+            f'Дирекційний = 180° + {r_degrees}°{r_minutes}\'{r_seconds}\'\' = {angle_degrees}°{angle_minutes}\'{angle_seconds}\'\'')
 
     elif difference_x > 0 and difference_y < 0:
         dir_angle = 360 - r
         angle_degrees, angle_minutes, angle_seconds = convert_decimal_degrees_to_degrees(dir_angle)
-        print(f'Дирекційний = 360° - {r_degrees}°{r_minutes}\'{r_seconds}\'\' = {angle_degrees}°{angle_minutes}\'{angle_seconds}\'\'')
+        print(
+            f'Дирекційний = 360° - {r_degrees}°{r_minutes}\'{r_seconds}\'\' = {angle_degrees}°{angle_minutes}\'{angle_seconds}\'\'')
 
     return angle_degrees, angle_minutes, angle_seconds
 
@@ -559,7 +562,7 @@ def relative_residual(x1, y1, xn, yn, xpr, ypr, p):
     rel_residual = p / abs_residual
 
     print(
-        f'Теор сума x = {xn} - {x1} = {round(difference_x,2)}\n'
+        f'Теор сума x = {xn} - {x1} = {round(difference_x, 2)}\n'
         f'Теор сума y = {yn} - {y1} = {round(difference_y, 2)}\n'
         f'Нев\'язка x = {xpr} - {round(difference_x, 2)} = {round(residual_x, 2)}\n'
         f'Нев\'язка y = {ypr} - {round(difference_y, 2)} = {round(residual_y, 2)}\n'
