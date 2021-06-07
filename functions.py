@@ -119,7 +119,7 @@ def convert_rad_to_decimal(angle):
 def permissible_residual_leveling_4class(length):
     length = coma_replace(length)
     perm_res = 20 * math.sqrt(length)
-    perm_res = math.ceil(perm_res)
+    perm_res = round(perm_res)
     print(f'Допустима нев\'язка = 20 * корінь_квадратний({length}) = {round(perm_res, 2)}')
     return perm_res
 
@@ -127,7 +127,7 @@ def permissible_residual_leveling_4class(length):
 def permissible_residual_technical_leveling(length):
     length = coma_replace(length)
     perm_res = 50 * math.sqrt(length)
-    perm_res = math.ceil(perm_res)
+    perm_res = round(perm_res)
     print(f'Допустима нев\'язка = 50 * корінь_квадратний({length}) = {round(perm_res, 2)}')
     return perm_res
 
